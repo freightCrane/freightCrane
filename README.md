@@ -9,7 +9,7 @@ include
 <script src="jStorage.js">
 ```
 and the approperate module that represent the storage you want to use.
-You can use all of the at the same time.
+You can use all of them at the same time.
 
 ```html
 <script src="jStorage.dropbox.js">
@@ -34,7 +34,7 @@ var dbStorage = jStorage('dropbox', function() {
 var ghStorage = jStorage('github', function() {
 	// github storage are now ready to be used.
 
-	ghStorage.get('testing', function() {
+	ghStorage.get('testing', function(data) {
 		// do something with the data here...
 	});
 });
