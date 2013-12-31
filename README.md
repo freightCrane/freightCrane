@@ -21,11 +21,21 @@ You can use all of the at the same time.
 Initiate the storage with a provider and it is ready to be used.
 
 ```js
-var dbStorage = jStorage('dropbox');
-var testing = dbStorage.get('testing');
+var dbStorage = jStorage('dropbox', function() {
+	// dropbox storage are now ready to be used.
+
+	dbStorage.get('testing', function(data) {
+		// do something with the data here...
+	);
+});
 ```
 
 ```js
-var ghStorage = jStorage('github');
-var testing = ghStorage.get('testing');
+var ghStorage = jStorage('github', function() {
+	// github storage are now ready to be used.
+
+	ghStorage.get('testing', function() {
+		// do something with the data here...
+	});
+});
 ```

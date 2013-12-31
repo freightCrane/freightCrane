@@ -10,32 +10,32 @@
  */
 (function (window, undefined) {
     var rootjStorage;
-    var jStorage = function (storageName, context) {
+    var jStorage = function (storageName, callback) {
         // The jStorage object is actually just the init constructor 'enhanced'
-        return new jStorage.fn.init(storageName, context, rootjStorage);
+        return new jStorage.fn.init(storageName, callback, rootjStorage);
     };
     jStorage.fn = jStorage.prototype = {
-        init: function (storageName) {
+        init: function (storageName, callback) {
             this._provider = false;
             console.log('init');
             if (jStorage.providers[storageName]) {
                 var provider = jStorage.providers[storageName];
-                provider.init('pling');
+                provider.init(callback);
                 this._provider = provider;
             } else {
                 console.log('Storage provider ' + storageName + ' was not loaded.');
             }
         },
-        get: function () {
+        get: function (name, callback) {
             console.log('get');
             if (this._provider) {
-                this._provider.get();
+                this._provider.get(name, callback);
             }
         },
-        set: function() {
+        set: function(name, content, callback) {
             console.log('set');
             if (this._provider) {
-                this._provider.set();
+                this._provider.set(name, content, callback);
             }
         },
         del: function() {

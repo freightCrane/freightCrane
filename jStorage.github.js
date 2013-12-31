@@ -1,21 +1,21 @@
 (function (jStorage, undefined) {
     jStorage.providers.github = jStorage.providers.prototype = {
-        init: function () {
+        init: function (callback) {
             console.log('github init');
         },
-        get: function () {
+        get: function (name, callback) {
             console.log('github get');
         },
-        set: function () {
+        set: function (name, content, callback) {
             console.log('github set');
         },
-        del: function () {
+        del: function (name, callback) {
             console.log('github del');
         },
-        list: function () {
+        list: function (name, callback) {
             console.log('github list');
         },
-        exists: function () {
+        exists: function (name, callback) {
             console.log('github exists');
         }
     };

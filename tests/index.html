@@ -67,21 +67,17 @@
     <script src="/tests/js/json.min.js"></script>
     <script src="/jStorage.js"></script>
     <script src="/jStorage.dropbox.js"></script>
-    <script src="/jStorage.github.js"></script>
+    <!--<script src="/jStorage.github.js"></script>-->
     <script>
+        
+        // page must be loaded over https to work with dropbox..
+        var storage = jStorage('dropbox', 'elazxasyxdt1pkc');
+        storage.set('file1.txt', 'Innehåll 1', function() { console.log('file1 added'); });
+        storage.set('file2.txt', 'Innehåll 2', function () { console.log('file2 added'); });
 
-        // jStorage
+        storage.get('file1.txt', function() { console.log('file1 read'); });
+        storage.get('file2.txt', function () { console.log('file2 read'); });
 
-
-    </script>
-    <script>
-        // TODO: add a sw control for this
-        var _gaq = [['_setAccount', 'UA-84758-9'], ['_trackPageview']];
-        (function (d, t) {
-            var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-            g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g, s)
-        }(document, 'script'));
     </script>
 </body>
 </html>
