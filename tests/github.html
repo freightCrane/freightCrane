@@ -50,7 +50,8 @@
 
         <script src="/jStorage.js"></script>
         <script src="/jStorage.github.js"></script>
-        <script src="/github.js"></script>
+        <script src="/tests/js/jquery-1.10.1.min.js"></script>
+        <!--<script src="/github.js"></script>-->
         <script>
 
             // page must be loaded over https to work with dropbox..
@@ -62,6 +63,9 @@
              ***/
             var storage = jStorage({
                 'name': 'github',
+                'clientId': 'df3a0f28472a4ad20f39',
+                'clientSecret': 'f3029af7a93f39319b580dea5afbce693bb56876',
+                'access': 'private', // http://developer.github.com/v3/oauth/#scopes
                 'repo': 'jStorageTest',
                 'callback': function (storage, callStatus) {
                     if (callStatus.isOK) {

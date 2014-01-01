@@ -34,6 +34,15 @@ Below we are listing the steps needed for every provider.
 7. Write a address into "OAuth redirect URIs", this is the address the user will be sent to after giving your app permissions. Please note that it MUST to start with "https://" to work if you are using a DNS.
 
 
+_Preparing GitHub_
+
+1. Go to: https://github.com/settings/applications
+2. Click the "Register new application" button.
+3. Enter info about your application, most importantly the "Authorization callback URL" value.
+4. Click the "Register application" button.
+
+
+
 ##Setup##
 
 include
