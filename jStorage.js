@@ -13,6 +13,9 @@
 // and using the variable undefined to get a X-browser compatible
 // way of comparing with undefined
 (function (window, undefined) {
+    // Upgrading to EcmaScript 5, and generating more helpful execptions and errors.
+    "use strict";
+
     var rootjStorage;
     var jStorage = function (config) {
         // The jStorage object is actually just the init constructor 'enhanced'
