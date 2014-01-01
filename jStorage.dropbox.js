@@ -109,7 +109,6 @@
             var self = this;
 
             this.client.writeFile(name, content, function (error, info) {
-                debugger;
                 if (error) {
                     // TODO: use a general error handling
                     var obj = {
@@ -143,7 +142,26 @@
             });
         },
         del: function (name, callback) {
-            console.log('dropbox del');
+            var self = this;
+
+            this.client.delete(name, function (error, info) {
+                if (error) {
+                    var callStatus = {
+                        'isOK': false,
+                        'code': -1,
+                        'msg': error.response.error
+                    };
+                    callback(callStatus);
+                } else {
+                    var callStatus = {
+                        'isOK': true,
+                        'code': 0,
+                        'msg': ''
+                    };
+
+                    callback(callStatus);
+                }
+            });
         },
         list: function (name, callback) {
             console.log('dropbox list');

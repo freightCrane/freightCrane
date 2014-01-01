@@ -30,30 +30,26 @@
             }
         },
         get: function (name, callback) {
-            //console.log('get');
             if (this._provider) {
                 this._provider.get(name, callback);
             }
         },
         set: function(name, content, callback) {
-            //console.log('set');
             if (this._provider) {
                 this._provider.set(name, content, callback);
             }
         },
-        del: function() {
-            //console.log('del');
+        del: function (name, callback) {
             if (this._provider) {
-                this._provider.del();
+                this._provider.del(name, callback);
             }
         },
-        list: function() {
-            //console.log('list');
+        list: function (name, callback) {
             if (this._provider) {
-                this._provider.list();
+                this._provider.list(name, callback);
             }
         },
-        exists: function() {
+        exists: function (name, callback) {
             //console.log('exists');
             if (this._provider) {
                 this._provider.exists();
