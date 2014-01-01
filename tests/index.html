@@ -20,7 +20,8 @@
     <div class="header">
         <div class="nav">
             <ul class="top-nav">
-                <li><a class="page-title" href="/tests/">jStorage</a></li>
+                <li><a class="page-title" href="/tests/" style="color:#fff">jStorage</a></li>
+                <li><a href="/tests/dropbox.html">Dropbox</a></li>
             </ul>
             <div style="clear: both"></div>
         </div>
@@ -29,12 +30,6 @@
     <div class="sw sw-pages">
         <div class="sw-page" data-sw-page-id="/">
             <div class="container content">
-                <div class="js-hide alert alert-error">
-                    <p>
-                        You are only viewing a part of this website due to that javascript is disable or not supported.<br />
-                        To get full functionality from this website you need to enable javascript or visit this website with a browser supporting javascript.
-                    </p>
-                </div>
                 <div class="span12 in-page-read-container" style="border-radius: 3px; background-color: #eee;">
                     <h1>jStorage - Storage made Easy</h1>
                     <p>
@@ -43,63 +38,5 @@
                 </div>
             </div>
         </div>
-
-
-        <script src="/jStorage.js"></script>
-        <script src="/jStorage.dropbox.js"></script>
-        <!--<script src="/jStorage.github.js"></script>-->
-        <script>
-
-            // page must be loaded over https to work with dropbox..
-
-            /***
-             * 1) storageName - Storage provider you want to use
-             * 2) callback - callback function to call when storage are ready to be used.
-             * 3-9) specific storage params
-             ***/
-            //var storage = jStorage({
-            //    'name': 'dropbox',
-            //    'appKey': 'elazxasyxdt1pkc',
-            //    'config': function (storage, callStatus) {
-            //        storage.set('file1.txt', 'Inneh�ll 1', function () { console.log('file1 added'); });
-            //        storage.set('file2.txt', 'Inneh�ll 2', function () { console.log('file2 added'); });
-
-            //        storage.get('file1.txt', function () { console.log('file1 read'); });
-            //        storage.get('file2.txt', function () { console.log('file2 read'); });
-            //    }
-            //});
-
-            /***
-             * 1) name - Name of the storage provider you want to use
-             * 2) callback - callback function to call when storage are ready to be used.
-             * 3) key - dropbox specific info, it requires your application key..
-             ***/
-            var storage = jStorage({
-                'name': 'dropbox',
-                'appKey-fake': 'elazxasyxdt1p',
-                'appKey': 'elazxasyxdt1pkc',
-                'callback': function (storage, callStatus) {
-                    if (callStatus.isOK) {
-                        storage.set('file1.txt', 'Inneh�ll 1', function () {
-                            console.log('file1 added');
-                            storage.get('file1.txt', function (file, callStatus) {
-                                if (callStatus.isOK) {
-                                    console.log('file1 read');
-                                }
-                            });
-                        });
-                        storage.set('file2.txt', 'Inneh�ll 2', function () {
-                            console.log('file2 added');
-                            storage.get('file2.txt', function (file, callStatus) {
-                                if (callStatus.isOK) {
-                                    console.log('file2 read');
-                                }
-                            });
-                        });
-                    }
-                }
-            });
-
-        </script>
 </body>
 </html>
