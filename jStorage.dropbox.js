@@ -70,27 +70,77 @@
         get: function (name, callback) {
             var self = this;
 
-            this.client.readFile(name, function (error, data) {
+            this.client.readFile(name, function (error, content, info) {
                 if (error) {
                     // TODO: use a general error handling
+                    var obj = {
+                        'name': name,
+                        'size': 0,
+                        'mime-type': '',
+                        'modified': new Date(),
+                        'data': null
+                    };
+                    var callStatus = {
+                        'isOK': false,
+                        'code': -1,
+                        'msg': error.response.error
+                    };
+
+                    callback(obj, callStatus);
                 } else {
-                    callback(data);
+                    var obj = {
+                        'name': name,
+                        'size': info.size,
+                        'mime-type': info.mimeType,
+                        'modified': info.modifiedAt,
+                        'data': content
+                    };
+                    var callStatus = {
+                        'isOK': true,
+                        'code': 0,
+                        'msg': ''
+                    };
+
+                    callback(obj, callStatus);
                 }
             });
         },
         set: function (name, content, callback) {
             var self = this;
 
-            this.client.writeFile(name, content, function (error, stat) {
+            this.client.writeFile(name, content, function (error, info) {
+                debugger;
                 if (error) {
                     // TODO: use a general error handling
+                    var obj = {
+                        'name': name,
+                        'size': 0,
+                        'mime-type': '',
+                        'modified': new Date()
+                    };
+                    var callStatus = {
+                        'isOK': false,
+                        'code': -1,
+                        'msg': error.response.error
+                    };
+
+                    callback(obj, callStatus);
                 } else {
-                    // TODO: return a normalized object
-                    callback(stat);
-                        //alert('File written successfully!');
+                    var obj = {
+                        'name': name,
+                        'size': info.size,
+                        'mime-type': info.mimeType,
+                        'modified': info.modifiedAt
+                    };
+                    var callStatus = {
+                        'isOK': true,
+                        'code': 0,
+                        'msg': ''
+                    };
+
+                    callback(obj, callStatus);
                 }
             });
-
         },
         del: function (name, callback) {
             console.log('dropbox del');

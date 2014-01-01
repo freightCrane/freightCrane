@@ -82,11 +82,19 @@
                     if (callStatus.isOK) {
                         storage.set('file1.txt', 'Inneh�ll 1', function () {
                             console.log('file1 added');
-                            storage.get('file1.txt', function () { console.log('file1 read'); });
+                            storage.get('file1.txt', function (file, callStatus) {
+                                if (callStatus.isOK) {
+                                    console.log('file1 read');
+                                }
+                            });
                         });
                         storage.set('file2.txt', 'Inneh�ll 2', function () {
                             console.log('file2 added');
-                            storage.get('file2.txt', function () { console.log('file2 read'); });
+                            storage.get('file2.txt', function (file, callStatus) {
+                                if (callStatus.isOK) {
+                                    console.log('file2 read');
+                                }
+                            });
                         });
                     }
                 }

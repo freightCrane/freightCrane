@@ -181,7 +181,7 @@ Object used in get method, object has the following properties:
 - name - filename including extension and directory.
 - size - size in bytes, represented by long.
 - mime-type - mime type of file.
-- modified - date file was modified represented in ms.
+- modified - date file was modified.
 - data - content of file as string or byte array.
 
 ```js
@@ -189,7 +189,7 @@ Object used in get method, object has the following properties:
 	'name': 'testing.txt',
 	'size': 1024,
 	'mime-type': 'text/html',
-	'modified': 23935653434,
+	'modified': Wed Jan 01 2014 15:11:07 GMT+0100 (W. Europe Standard Time),
 	'data': byte array or string depending on mime-type
 }
 ```
@@ -200,13 +200,13 @@ Object returned for getMeta and list methods, object has the following propertie
 - name - filename including extension and directory.
 - size - size in bytes, represented by long.
 - mime-type - mime type of file.
-- modified - date file was modified represented in ms.
+- modified - date file was modified.
 
 ```js
 {
 	'name': 'testing.txt',
 	'size': 1024,
 	'mime-type': 'text/html'
-	'modified': 23935653434
+	'modified': Wed Jan 01 2014 15:11:07 GMT+0100 (W. Europe Standard Time)
 }
 ```
