@@ -113,7 +113,7 @@ storage.del('testing.txt', function(callStatus) {
 });
 ```
 
-###lists(directory_path, callback(files, callStatus))###
+###lists(directory_path, callback(fileMeta[], callStatus))###
 
 List all files in directory.
 
@@ -121,7 +121,7 @@ List all files in directory.
 storage.lists('testing.txt', function(files, callStatus) {
 	if (callStatus.status == 'OK') {
 		for(var i = 0; i < files.length; i++) {
-			// files[i]
+			// files[i].name
 		}
 	}
 });
