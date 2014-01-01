@@ -89,7 +89,7 @@
                     callback(obj, callStatus);
                 } else {
                     var obj = {
-                        'name': name,
+                        'name': info.path,
                         'size': info.size,
                         'mime-type': info.mimeType,
                         'modified': info.modifiedAt,
@@ -126,7 +126,7 @@
                     callback(obj, callStatus);
                 } else {
                     var obj = {
-                        'name': name,
+                        'name': info.path,
                         'size': info.size,
                         'mime-type': info.mimeType,
                         'modified': info.modifiedAt
@@ -164,7 +164,38 @@
             });
         },
         list: function (name, callback) {
-            console.log('dropbox list');
+            var self = this;
+
+            this.client.readdir(name, function (error, filenames, dirInfo, fileInfos) {
+                var lists = [];
+
+                if (error) {
+                    var callStatus = {
+                        'isOK': false,
+                        'code': -1,
+                        'msg': error.response.error
+                    };
+                    callback(lists, callStatus);
+                } else {
+                    for (var i = 0; i < fileInfos.length; i++) {
+                        var info = fileInfos[i];
+                        lists.push({
+                            'name': info.path,
+                            'size': info.size,
+                            'mime-type': info.mimeType,
+                            'modified': info.modifiedAt
+                        });
+                    }
+
+                    var callStatus = {
+                        'isOK': true,
+                        'code': 0,
+                        'msg': ''
+                    };
+
+                    callback(lists, callStatus);
+                }
+            });
         },
         exists: function (name, callback) {
             var self = this;
