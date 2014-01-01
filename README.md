@@ -1,8 +1,9 @@
 #jStorage - Storage made Easy#
 
+jStorage helps you get started with using cloud storage (Like Dropbox or GitHub).
+With jStorage you just need to learn 1 API and you can easily add support for more providers.
 
-
-##Prepare Provider(s)##
+##Prepare provider(s)##
 
 Depending on the storage provider you want to use you need to do some steps at the provider to prepare it for usage.
 Below we are listing the steps needed for every provider.
@@ -36,22 +37,49 @@ You can use all of them at the same time.
 
 Initiate the storage with a provider and it is ready to be used.
 
-```js
-var dbStorage = jStorage('dropbox', function() {
-	// dropbox storage are now ready to be used.
+###Dropbox Init###
 
-	dbStorage.get('testing', function(data) {
-		// do something with the data here...
-	);
+```js
+var dbStorage = jStorage({
+	'name': 'dropbox',
+	'appkey': 'APP KEY YOU SAVED FROM STEP 6',
+	'callback': function() {
+		// dropbox storage are now ready to be used.
+	}
 });
 ```
 
-```js
-var ghStorage = jStorage('github', function() {
-	// github storage are now ready to be used.
+###GitHub Init###
 
-	ghStorage.get('testing', function(data) {
-		// do something with the data here...
-	});
+```js
+var ghStorage = jStorage({
+	'name': 'github',
+	'callback': function() {
+		// github storage are now ready to be used.
+	}
 });
 ```
+
+
+##API##
+
+###get(file_path, callback)###
+
+Read content of file.
+
+###set(file_path, content, callback)###
+
+Write file content.
+
+###del(file_path, callback)###
+
+Remove file.
+
+###lists(directory_path, callback)###
+
+List all files in directory.
+
+###exists(file_path, callback)###
+
+Does file exists?
+
