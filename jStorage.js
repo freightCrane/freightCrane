@@ -10,9 +10,9 @@
  */
 (function (window, undefined) {
     var rootjStorage;
-    var jStorage = function (storageName, callback) {
+    var jStorage = function (config) {
         // The jStorage object is actually just the init constructor 'enhanced'
-        return new jStorage.fn.init(storageName, callback, rootjStorage);
+        return new jStorage.fn.init(config);
     };
     jStorage.fn = jStorage.prototype = {
         init: function (config) {
