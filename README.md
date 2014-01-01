@@ -132,7 +132,7 @@ storage.del('testing.txt', function(callStatus) {
 List all files in directory.
 
 ```js
-storage.lists('testing.txt', function(files, callStatus) {
+storage.lists('/', function(files, callStatus) {
 	if (callStatus.isOK) {
 		for(var i = 0; i < files.length; i++) {
 			// files[i].name
