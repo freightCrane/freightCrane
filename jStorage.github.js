@@ -1,6 +1,6 @@
 (function (jStorage, undefined) {
     jStorage.providers.github = jStorage.providers.prototype = {
-        init: function (callback) {
+        init: function (wrapper, config) {
             console.log('github init');
         },
         get: function (name, callback) {

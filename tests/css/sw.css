@@ -1,0 +1,265 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #fff;
+}
+
+.js .js-hide {
+    display: none;
+}
+
+.no-js .js-require {
+    display: none;
+}
+
+.sign-in {
+    float: right;
+}
+
+.header {
+    color: gray;
+    background-color: #000;
+}
+
+.sw-pages {
+    padding-top: 15px;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+.nav {
+    width: 100%;
+}
+
+    .nav .top-nav {
+        list-style-type: none;
+        list-style-image: none;
+        padding: 0;
+        position: relative;
+        margin: 0;
+    }
+
+    .nav .site-menu {
+        list-style-type: none;
+        list-style-image: none;
+    }
+
+    .nav li a {
+        font-size: 14px;
+        line-height: 24px;
+        float: left;
+        position: relative;
+        padding: 10px;
+    }
+
+    .nav a {
+        color: gray;
+        text-decoration: none;
+    }
+
+        .nav a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+    .nav .page-title {
+        font-size: 24px;
+    }
+
+.content {
+    padding-left: 10px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+    .content p,
+    .content h1 {
+        padding: 15px;
+        margin: 0;
+    }
+
+    .content h2,
+    .content h3 {
+        padding: 15px;
+        padding-bottom: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+.width-full {
+    width: 100%;
+    float: left;
+    margin-left: 0;
+    margin-bottom: 15px;
+}
+
+.width-puff {
+    width: 300px;
+    float: left;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.span12 {
+    width: 66%;
+    float: left;
+    margin-left: 0;
+    margin-bottom: 15px;
+}
+
+.span6 {
+    width: 30%;
+    float: left;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.only-mobile {
+    display: none;
+}
+
+.in-page-read-more {
+    display: none;
+}
+
+.read-more {
+    float: right;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.visible,
+.js .site-menu.visible,
+.js .content .in-page-more-text.visible {
+    display: block;
+}
+
+.hidden,
+.js .in-page-read-more.hidden {
+    display: none;
+}
+
+.sw-provider-button {
+    padding: 15px;
+    border: solid 1px #000;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    min-width: 140px;
+    cursor: pointer;
+}
+
+.sw-provider-container {
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+@media only screen and (max-width: 990px) {
+    .content {
+        width: 100%;
+        padding: 0;
+    }
+
+    .span12 {
+        margin-left: 1%;
+    }
+}
+
+@media only screen and (max-width: 810px) {
+    .content {
+        width: 100%;
+    }
+
+    .span12 {
+        width: 97%;
+        margin-bottom: 1%;
+    }
+
+    .span6 {
+        width: 48%;
+        margin: 1%;
+        margin-right: 0;
+        margin-top: 0;
+    }
+
+    .content p {
+        padding-top: 5px;
+    }
+
+    .content h1 {
+        padding-bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 590px) {
+    .nav .first-normal-menu-item {
+        clear: left;
+    }
+}
+
+@media only screen and (max-width: 598px) {
+    .nav .first-normal-menu-item {
+        clear: left;
+    }
+}
+
+@media only screen and (max-width: 526px) {
+    .span6 {
+        width: 97%;
+    }
+
+    .js .content .span6 p.text {
+        display: none; /* make sure we are only hiding this IF browser has javascript */
+    }
+}
+
+@media only screen and (max-width: 410px) {
+    .js .content .in-page-more-text {
+        display: none;
+    }
+
+    .js .in-page-read-more {
+        display: block;
+    }
+
+    .site-menu {
+        list-style: none;
+        list-style-image: none;
+        padding-bottom: 10px;
+        padding-left: 0;
+    }
+
+    .js .site-menu {
+        display: none; /* make sure we are only hiding this IF browser has javascript */
+    }
+
+    .nav .site-menu li a {
+        float: none;
+        display: block;
+        padding: 0;
+        padding-left: 14px;
+    }
+
+    .touch .nav .site-menu li a {
+        padding: 5px 0 5px 14px;
+    }
+
+    .js .only-mobile {
+        float: right;
+        display: block;
+    }
+
+    .header {
+        margin-bottom: 5px;
+    }
+}

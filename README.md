@@ -43,7 +43,7 @@ _Dropbox_
 var storage = jStorage({
 	'name': 'dropbox',
 	'appKey': 'APP KEY YOU SAVED FROM STEP 6 IN PREPARE DROPBOX SECTION',
-	'callback': function(callStatus) {
+	'callback': function(storage, callStatus) {
 		if (callStatus.isOK) {
 			// dropbox storage are now ready to be used.
 		}
@@ -56,7 +56,7 @@ _GitHub_
 ```js
 var storage = jStorage({
 	'name': 'github',
-	'callback': function(callStatus) {
+	'callback': function(storage, callStatus) {
 		if (callStatus.isOK) {
 			// github storage are now ready to be used.
 		}

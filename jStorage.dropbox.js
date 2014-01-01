@@ -14,59 +14,80 @@
     /* Content from: https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js : End */
 
     jStorage.providers.dropbox = jStorage.providers.prototype = {
-        init: function (callback) {
-            console.log('dropbox init');
+        init: function (wrapper, config) {
+            var self = this;
+            this._config = config;
 
-            this.client = new Dropbox.Client({ key: 'elazxasyxdt1pkc' });
+            this.client = new Dropbox.Client({ key: config.appKey });
 
             // Try to complete OAuth flow.
             this.client.authenticate({ interactive: false }, function (error) {
                 // TODO: Should we force authentication here so developers know everything is ready in the next step?
-                callback();
+
+                // We need to try to read from storage to know if it was successfull or not...
+                // Don't know why this is needed, the error variable is always null for some reason.
+                self.client.readFile("", function (error2, data) {
+                    var callStatus = false;
+                    if (!error2 || error2.status == 404) {
+                        callStatus = {
+                            'isOK': !error,
+                            'code': 0,
+                            'msg': ''
+                        };
+                        self._config.callback(wrapper, callStatus);
+                    } else {
+                        self.client.authenticate(function (error3, client) {
+                            if (!error3) {
+                                callStatus = {
+                                    'isOK': !error,
+                                    'code': 0,
+                                    'msg': ''
+                                };
+                            } else {
+                                if (error3.status == 401) {
+                                    // App doesn't have access
+                                    callStatus = {
+                                        'isOK': false,
+                                        'code': 401,
+                                        'msg': error3.response.error
+                                    };
+                                } else {
+                                    // Unknown error
+                                    callStatus = {
+                                        'isOK': false,
+                                        'code': 0,
+                                        'msg': error3.response.error
+                                    };
+                                }
+                            }
+                            self._config.callback(wrapper, callStatus);
+                        });
+                    }
+                });
+
             });
         },
         get: function (name, callback) {
-            console.log('dropbox get');
+            var self = this;
 
             this.client.readFile(name, function (error, data) {
                 if (error) {
-                    if (error.status == 401) {
-                        // User havn't added application permission to do anything, ask user if *he wants todo so.
-                        this.client.authenticate(function (error2, client) {
-                            if (error2) {
-                                //alert('Error: ' + error2);
-                            } else {
-                                this.get(name, callback);
-                            }
-                        });
-                    }
+                    // TODO: use a general error handling
                 } else {
                     callback(data);
                 }
             });
         },
         set: function (name, content, callback) {
-            console.log('dropbox set');
+            var self = this;
 
             this.client.writeFile(name, content, function (error, stat) {
                 if (error) {
-                    if (error.status == 401) {
-                        // User havn't added application permission to do anything, ask user if *he wants todo so.
-                        this.client.authenticate(function (error2, client) {
-                            if (error2) {
-                                //alert('Error: ' + error2);
-                            } else {
-                                this.set(name, content, callback);
-                            }
-                        });
-                    } else {
-                        //alert('Error: ' + error);
-                    }
-
+                    // TODO: use a general error handling
                 } else {
                     // TODO: return a normalized object
                     callback(stat);
-                    //alert('File written successfully!');
+                        //alert('File written successfully!');
                 }
             });
 

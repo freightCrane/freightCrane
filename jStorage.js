@@ -15,43 +15,46 @@
         return new jStorage.fn.init(storageName, callback, rootjStorage);
     };
     jStorage.fn = jStorage.prototype = {
-        init: function (storageName, callback) {
+        init: function (config) {
             this._provider = false;
-            console.log('init');
-            if (jStorage.providers[storageName]) {
-                var provider = jStorage.providers[storageName];
-                provider.init(callback);
+
+            // TODO: do a config and config.name check..
+
+            if (jStorage.providers[config.name]) {
+                var provider = jStorage.providers[config.name];
                 this._provider = provider;
+                provider.init(this, config);
             } else {
-                console.log('Storage provider ' + storageName + ' was not loaded.');
+                //console.log('Storage provider ' + config.name + ' was not loaded.');
+                throw 'Storage provider ' + config.name + ' was not loaded.';
             }
         },
         get: function (name, callback) {
-            console.log('get');
+            //console.log('get');
             if (this._provider) {
                 this._provider.get(name, callback);
             }
         },
         set: function(name, content, callback) {
-            console.log('set');
+            //console.log('set');
             if (this._provider) {
                 this._provider.set(name, content, callback);
             }
         },
         del: function() {
-            console.log('del');
+            //console.log('del');
             if (this._provider) {
                 this._provider.del();
             }
         },
         list: function() {
-            console.log('list');
+            //console.log('list');
             if (this._provider) {
                 this._provider.list();
             }
         },
         exists: function() {
-            console.log('exists');
+            //console.log('exists');
             if (this._provider) {
                 this._provider.exists();
             }
