@@ -8,7 +8,7 @@ With jStorage you just need to learn 1 API and you can easily add support for mo
 Depending on the storage provider you want to use you need to do some steps at the provider to prepare it for usage.
 Below we are listing the steps needed for every provider.
 
-###Preparing Dropbox###
+_Preparing Dropbox_
 
 1. Go to: https://www.dropbox.com/developers/apps
 2. Click the "Create app"
@@ -32,11 +32,6 @@ You can use all of them at the same time.
 <script src="jStorage.dropbox.js">
 <script src="jStorage.github.js">
 ```
-
-##Usage##
-
-Initiate the storage with a provider and it is ready to be used.
-
 
 ##API##
 
