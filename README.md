@@ -65,12 +65,24 @@ var storage = jStorage({
 ```
 
 
-###get(file_path, callback(callStatus))###
+###get(file_path, callback(file, callStatus))###
 
 Read content of file.
 
 ```js
-storage.get('testing.txt', function(callStatus) {
+storage.get('testing.txt', function(file, callStatus) {
+	if (callStatus.status == 'OK') {
+
+	}
+});
+```
+
+###getMeta(file_path, callback(fileMeta, callStatus))###
+
+Read metadata for file.
+
+```js
+storage.get('testing.txt', function(fileMeta, callStatus) {
 	if (callStatus.status == 'OK') {
 
 	}
@@ -149,17 +161,52 @@ storage.exists('testing.txt', function(file_exists, callStatus) {
 ###callStatus###
 
 Indicate if the call was successfull or not.
-The returned object has a property "status" that can have the following values:
+Object has the following properties:
 
-- _OK_ - Call was ended successfully, everything is fine.
-- _ERROR_ - Something went wrong, read msg property to know more
-
-and a msg property that is only populated if the status was not OK.
-
+- status - is true or false, depending on if the call was successfull or not.
+- msg - human readable status message
+- code - status code, can be used to do different actions depending on value. read more on the specific method to get all possible values.
 
 ```js
 {
-	'status': 'OK',
+	'status': true,
+	'code': 0,
 	'msg': ''
+}
+```
+
+###file###
+
+Object used in get method, object has the following properties:
+- name - filename including extension and directory.
+- size - size in bytes, represented by long.
+- mime-type - mime type of file.
+- modified - date file was modified represented in ms.
+- data - content of file as string or byte array.
+
+```js
+{
+	'name': 'testing.txt',
+	'size': 1024,
+	'mime-type': 'text/html',
+	'modified': 23935653434,
+	'data': byte array or string depending on mime-type
+}
+```
+
+###fileMeta###
+
+Object returned for getMeta and list methods, object has the following properties:
+- name - filename including extension and directory.
+- size - size in bytes, represented by long.
+- mime-type - mime type of file.
+- modified - date file was modified represented in ms.
+
+```js
+{
+	'name': 'testing.txt',
+	'size': 1024,
+	'mime-type': 'text/html'
+	'modified': 23935653434
 }
 ```
