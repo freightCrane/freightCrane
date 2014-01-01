@@ -3,6 +3,16 @@
 jStorage helps you get started with using cloud storage (Like Dropbox or GitHub).
 With jStorage you just need to learn 1 API and you can easily add support for more providers in your project.
 
+ Storage		|     Status    |     Address    |
+:---------------|:--------------|:---------------
+ GitHub			| Planned 		|	https://github.com/
+ Dropbox		| Implemented	|	https://www.dropbox.com/
+ MS Azure		| Planned 		|	https://account.windowsazure.com/Home/Index
+ SkyDrive 		| Planned 		|	https://skydrive.live.com/
+ Google Drive 	| Planned 		|	https://skydrive.live.com/
+ Box			| Planned 		|	https://www.box.com/
+
+
 ##Prepare provider(s)##
 
 Depending on the storage provider you want to use you need to do some steps at the provider to prepare it for usage.
