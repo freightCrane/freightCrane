@@ -37,22 +37,27 @@ You can use all of them at the same time.
 
 Initiate the storage with a provider and it is ready to be used.
 
-###Dropbox Init###
+
+##API##
+
+###jStorage(initConfig)###
+
+####Dropbox####
 
 ```js
-var dbStorage = jStorage({
+var storage = jStorage({
 	'name': 'dropbox',
-	'appkey': 'APP KEY YOU SAVED FROM STEP 6',
+	'appkey': 'APP KEY YOU SAVED FROM STEP 6 IN PREPARE DROPBOX SECTION',
 	'callback': function() {
 		// dropbox storage are now ready to be used.
 	}
 });
 ```
 
-###GitHub Init###
+####GitHub####
 
 ```js
-var ghStorage = jStorage({
+var storage = jStorage({
 	'name': 'github',
 	'callback': function() {
 		// github storage are now ready to be used.
@@ -61,25 +66,86 @@ var ghStorage = jStorage({
 ```
 
 
-##API##
-
 ###get(file_path, callback)###
 
 Read content of file.
+
+```js
+storage.get('testing.txt', function() {
+
+});
+```
 
 ###set(file_path, content, callback)###
 
 Write file content.
 
+```js
+storage.set('testing.txt', 'Hello World!', function() {
+
+});
+```
+
 ###del(file_path, callback)###
 
 Remove file.
+
+```js
+storage.del('testing.txt', function() {
+
+});
+```
+
 
 ###lists(directory_path, callback)###
 
 List all files in directory.
 
+```js
+storage.lists('testing.txt', function() {
+
+});
+```
+
 ###exists(file_path, callback)###
 
 Does file exists?
 
+```js
+storage.exists('testing.txt', function() {
+
+});
+```
+
+
+###initConfig###
+
+
+
+```js
+{
+	'name': 'dropbox',
+	[...]
+	'callback': function(callStatus) {
+
+	}
+}
+```
+
+###callStatus###
+
+Indicate if the call was successfull or not.
+The returned object has a property "status" that can have the following values:
+
+- *OK* - Call was ended successfully, everything is fine.
+- *ERROR* - Something went wrong, read msg property to know more
+
+and a msg property that is only populated if the status was not OK.
+
+
+```js
+{
+	'status': 'OK',
+	'msg': ''
+}
+```
