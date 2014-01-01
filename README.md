@@ -42,24 +42,24 @@ Initiate the storage with a provider and it is ready to be used.
 
 ###jStorage(initConfig)###
 
-####Dropbox####
+_Dropbox_
 
 ```js
 var storage = jStorage({
 	'name': 'dropbox',
-	'appkey': 'APP KEY YOU SAVED FROM STEP 6 IN PREPARE DROPBOX SECTION',
-	'callback': function() {
+	'appKey': 'APP KEY YOU SAVED FROM STEP 6 IN PREPARE DROPBOX SECTION',
+	'callback': function(callStatus) {
 		// dropbox storage are now ready to be used.
 	}
 });
 ```
 
-####GitHub####
+_GitHub_
 
 ```js
 var storage = jStorage({
 	'name': 'github',
-	'callback': function() {
+	'callback': function(callStatus) {
 		// github storage are now ready to be used.
 	}
 });
@@ -137,8 +137,8 @@ storage.exists('testing.txt', function() {
 Indicate if the call was successfull or not.
 The returned object has a property "status" that can have the following values:
 
-- *OK* - Call was ended successfully, everything is fine.
-- *ERROR* - Something went wrong, read msg property to know more
+- _OK_ - Call was ended successfully, everything is fine.
+- _ERROR_ - Something went wrong, read msg property to know more
 
 and a msg property that is only populated if the status was not OK.
 
