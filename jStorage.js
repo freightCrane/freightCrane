@@ -8,6 +8,10 @@
  *
  * Date: 21:09 2013-12-30
  */
+
+// Creating a closure to avoid leaking variables into global scope,
+// and using the variable undefined to get a X-browser compatible
+// way of comparing with undefined
 (function (window, undefined) {
     var rootjStorage;
     var jStorage = function (config) {
