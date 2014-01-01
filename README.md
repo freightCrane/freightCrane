@@ -49,7 +49,9 @@ var storage = jStorage({
 	'name': 'dropbox',
 	'appKey': 'APP KEY YOU SAVED FROM STEP 6 IN PREPARE DROPBOX SECTION',
 	'callback': function(callStatus) {
-		// dropbox storage are now ready to be used.
+		if (callStatus.status == 'OK') {
+			// dropbox storage are now ready to be used.
+		}
 	}
 });
 ```
@@ -60,60 +62,77 @@ _GitHub_
 var storage = jStorage({
 	'name': 'github',
 	'callback': function(callStatus) {
-		// github storage are now ready to be used.
+		if (callStatus.status == 'OK') {
+			// github storage are now ready to be used.
+		}
 	}
 });
 ```
 
 
-###get(file_path, callback)###
+###get(file_path, callback(callStatus))###
 
 Read content of file.
 
 ```js
-storage.get('testing.txt', function() {
+storage.get('testing.txt', function(callStatus) {
+	if (callStatus.status == 'OK') {
 
+	}
 });
 ```
 
-###set(file_path, content, callback)###
+###set(file_path, content, callback(callStatus))###
 
 Write file content.
 
 ```js
-storage.set('testing.txt', 'Hello World!', function() {
+storage.set('testing.txt', 'Hello World!', function(callStatus) {
+	if (callStatus.status == 'OK') {
 
+	}
 });
 ```
 
-###del(file_path, callback)###
+###del(file_path, callback(callStatus))###
 
 Remove file.
 
 ```js
-storage.del('testing.txt', function() {
+storage.del('testing.txt', function(callStatus) {
+	if (callStatus.status == 'OK') {
 
+	}
 });
 ```
 
-
-###lists(directory_path, callback)###
+###lists(directory_path, callback(files, callStatus))###
 
 List all files in directory.
 
 ```js
-storage.lists('testing.txt', function() {
-
+storage.lists('testing.txt', function(files, callStatus) {
+	if (callStatus.status == 'OK') {
+		for(var i = 0; i < files.length; i++) {
+			// files[i]
+		}
+	}
 });
 ```
 
-###exists(file_path, callback)###
+###exists(file_path, callback(bool, callStatus))###
 
 Does file exists?
 
 ```js
-storage.exists('testing.txt', function() {
-
+storage.exists('testing.txt', function(file_exists, callStatus) {
+	if (callStatus.status == 'OK') {
+		if (file_exists) {
+			// File exists
+		} else {
+			// File didn't exist
+		}
+	}
 });
 ```
 
