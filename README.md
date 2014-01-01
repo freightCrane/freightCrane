@@ -5,7 +5,7 @@ With jStorage you just need to learn 1 API and you can easily add support for mo
 
  Storage		|     Status    |     Address    |
 :---------------|:--------------|:---------------
- Dropbox		| Implemented	|	https://www.dropbox.com/
+ Dropbox		| <a href="#dropbox">Implemented</a>	|	https://www.dropbox.com/
  GitHub			| In progress	|	https://github.com/
  MS Azure		| Planned 		|	https://account.windowsazure.com/Home/Index
  SkyDrive 		| Planned 		|	https://skydrive.live.com/
@@ -22,7 +22,8 @@ With jStorage you just need to learn 1 API and you can easily add support for mo
 Depending on the storage provider you want to use you need to do some steps at the provider to prepare it for usage.
 Below we are listing the steps needed for every provider.
 
-_Preparing Dropbox_
+<a name="dropbox">
+###Preparing Dropbox###
 
 1. Go to: https://www.dropbox.com/developers/apps
 2. Click the "Create app"
