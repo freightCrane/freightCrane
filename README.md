@@ -12,7 +12,10 @@ With jStorage you just need to learn 1 API and you can easily add support for mo
  Google Drive 	| Planned 		|	https://skydrive.live.com/
  Box			| Planned 		|	https://www.box.com/
 
- Demo: <https://jstorage-flowertwig-org.loopiasecure.com/tests/>
+##Demo##
+
+<https://jstorage-flowertwig-org.loopiasecure.com/tests/>
+
 
 ##Prepare provider(s)##
 
