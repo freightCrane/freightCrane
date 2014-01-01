@@ -1,7 +1,7 @@
 #jStorage - Storage made Easy#
 
 jStorage helps you get started with using cloud storage (Like Dropbox or GitHub).
-With jStorage you just need to learn 1 API and you can easily add support for more providers.
+With jStorage you just need to learn 1 API and you can easily add support for more providers in your project.
 
 ##Prepare provider(s)##
 
