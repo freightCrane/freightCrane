@@ -44,7 +44,7 @@ var storage = jStorage({
 	'name': 'dropbox',
 	'appKey': 'APP KEY YOU SAVED FROM STEP 6 IN PREPARE DROPBOX SECTION',
 	'callback': function(callStatus) {
-		if (callStatus.status == 'OK') {
+		if (callStatus.isOK) {
 			// dropbox storage are now ready to be used.
 		}
 	}
@@ -57,7 +57,7 @@ _GitHub_
 var storage = jStorage({
 	'name': 'github',
 	'callback': function(callStatus) {
-		if (callStatus.status == 'OK') {
+		if (callStatus.isOK) {
 			// github storage are now ready to be used.
 		}
 	}
@@ -71,7 +71,7 @@ Read content of file.
 
 ```js
 storage.get('testing.txt', function(file, callStatus) {
-	if (callStatus.status == 'OK') {
+	if (callStatus.isOK) {
 
 	}
 });
@@ -83,7 +83,7 @@ Read metadata for file.
 
 ```js
 storage.get('testing.txt', function(fileMeta, callStatus) {
-	if (callStatus.status == 'OK') {
+	if (callStatus.isOK) {
 
 	}
 });
@@ -95,7 +95,7 @@ Write file content.
 
 ```js
 storage.set('testing.txt', 'Hello World!', function(callStatus) {
-	if (callStatus.status == 'OK') {
+	if (callStatus.isOK) {
 
 	}
 });
@@ -107,7 +107,7 @@ Remove file.
 
 ```js
 storage.del('testing.txt', function(callStatus) {
-	if (callStatus.status == 'OK') {
+	if (callStatus.isOK) {
 
 	}
 });
@@ -119,7 +119,7 @@ List all files in directory.
 
 ```js
 storage.lists('testing.txt', function(files, callStatus) {
-	if (callStatus.status == 'OK') {
+	if (callStatus.isOK) {
 		for(var i = 0; i < files.length; i++) {
 			// files[i].name
 		}
@@ -133,7 +133,7 @@ Does file exists?
 
 ```js
 storage.exists('testing.txt', function(file_exists, callStatus) {
-	if (callStatus.status == 'OK') {
+	if (callStatus.isOK) {
 		if (file_exists) {
 			// File exists
 		} else {
@@ -163,13 +163,13 @@ storage.exists('testing.txt', function(file_exists, callStatus) {
 Indicate if the call was successfull or not.
 Object has the following properties:
 
-- status - is true or false, depending on if the call was successfull or not.
+- isOK - is true or false, depending on if the call was successfull or not.
 - msg - human readable status message
 - code - status code, can be used to do different actions depending on value. read more on the specific method to get all possible values.
 
 ```js
 {
-	'status': true,
+	'isOK': true,
 	'code': 0,
 	'msg': ''
 }
