@@ -5,7 +5,7 @@ With jStorage you just need to learn 1 API and you can easily add support for mo
 
  Storage		|     Status    |     Address    |
 :---------------|:--------------|:---------------
- GitHub			| Planned 		|	https://github.com/
+ GitHub			| In progress	|	https://github.com/
  Dropbox		| Implemented	|	https://www.dropbox.com/
  MS Azure		| Planned 		|	https://account.windowsazure.com/Home/Index
  SkyDrive 		| Planned 		|	https://skydrive.live.com/

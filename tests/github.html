@@ -21,9 +21,9 @@
         <div class="nav">
             <ul class="top-nav">
                 <li><a class="page-title" href="/tests/">jStorage</a></li>
-                <li><a href="/tests/dropbox.html" style="color:#fff">Dropbox</a></li>
-                <li><a href="/tests/github.html">GitHub</a></li>
-            </ul>
+                <li><a href="/tests/dropbox.html">Dropbox</a></li>
+                <li><a href="/tests/github.html" style="color:#fff">GitHub</a></li>
+           </ul>
             <div style="clear: both"></div>
         </div>
     </div>
@@ -38,11 +38,9 @@
                     </p>
                 </div>
                 <div class="span12 in-page-read-container" style="border-radius: 3px; background-color: #eee;">
-                    <h1>jStorage - Dropbox</h1>
+                    <h1>jStorage - GitHub</h1>
                     <p>
-                        If you accepted this website to access to your Dropbox account you will see 2 files in this location in your dropbox
-                        <br /><br />
-                        <strong>/Apps/jStorage - Limited/</strong>
+                        If you accepted this website to access to your GitHub account you will see 2 files in a repository called <strong>jStorageTest</strong> in your GitHub.
                         <br /><br />
                         If you look at the source code of this file you will see how we did it :)
                     </p>
@@ -51,7 +49,8 @@
         </div>
 
         <script src="/jStorage.js"></script>
-        <script src="/jStorage.dropbox.js"></script>
+        <script src="/jStorage.github.js"></script>
+        <script src="/github.js"></script>
         <script>
 
             // page must be loaded over https to work with dropbox..
@@ -62,8 +61,8 @@
              * 3) key - dropbox specific info, it requires your application key..
              ***/
             var storage = jStorage({
-                'name': 'dropbox',
-                'appKey': 'elazxasyxdt1pkc',
+                'name': 'github',
+                'repo': 'jStorageTest',
                 'callback': function (storage, callStatus) {
                     if (callStatus.isOK) {
                         storage.set('file1.txt', 'Innehåll 1', function () {
