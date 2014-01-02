@@ -21,19 +21,24 @@
         // The jStorage object is actually just the init constructor 'enhanced'
         return new jStorage.fn.init(config);
     };
+    var error = function (msg) {
+        // prepend with our libName to be nice, not everyone has nice debugging tools.
+        throw "jStorage: " + msg;
+    };
     jStorage.fn = jStorage.prototype = {
         init: function (config) {
             this._provider = false;
 
-            // TODO: do a config and config.name check..
+            // Do some inital sanity checking of our input.
+            if(config === undefined || !config) error("No config, please consult the readme ;)");
+            if(config['name'] === undefined) error("No name in config.");
 
             if (jStorage.providers[config.name]) {
                 var provider = jStorage.providers[config.name];
                 this._provider = provider;
                 provider.init(this, config);
             } else {
-                //console.log('Storage provider ' + config.name + ' was not loaded.');
-                throw 'Storage provider ' + config.name + ' was not loaded.';
+                error('Storage provider ' + config.name + ' was not loaded.');
             }
         },
         get: function (name, callback) {
