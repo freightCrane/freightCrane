@@ -11,7 +11,8 @@
 
 // Creating a closure to avoid leaking variables into global scope,
 // and using the variable undefined to get a X-browser compatible
-// way of comparing with undefined
+// way of comparing with undefined, see this stackoverflow answer:
+// http://stackoverflow.com/questions/135448/how-do-i-check-to-see-if-an-object-has-a-property-in-javascript#answer-135568
 (function (window, undefined) {
     // Upgrading to EcmaScript 5, and generating more helpful execptions and errors.
     "use strict";
