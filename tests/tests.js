@@ -1,4 +1,4 @@
-test( "broken core sanity checks", function() {
+test( "Core sanity checks", function() {
     throws(function(){
         jStorage();
     }, /^jStorage: No config, please consult the readme ;\)$/, "No config object should throw error");
