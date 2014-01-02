@@ -17,7 +17,6 @@
     // Upgrading to EcmaScript 5, and generating more helpful execptions and errors.
     "use strict";
 
-    var rootjStorage;
     var jStorage = function (config) {
         // The jStorage object is actually just the init constructor 'enhanced'
         return new jStorage.fn.init(config);
@@ -72,7 +71,6 @@
     // Give the init function the jStorage prototype for later instantiation
     jStorage.fn.init.prototype = jStorage.fn;
 
-    rootjStorage = jStorage;
     window.jStorage = jStorage;
 
 }(window));
