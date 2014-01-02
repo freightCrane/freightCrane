@@ -14,40 +14,41 @@
     <script>
         document.getElementsByTagName('html')[0].className = 'js';
     </script>
-    <link href="/tests/css/sw.css" rel="stylesheet" />
+    <link href="css/sw.css" rel="stylesheet" />
 </head>
 <body>
     <div class="header">
         <div class="nav">
             <ul class="top-nav">
-                <li><a class="page-title" href="/tests/">jStorage</a></li>
-                <li><a href="/tests/dropbox.html">Dropbox</a></li>
-                <li><a href="/tests/github.html" style="color:#fff">GitHub</a></li>
-           </ul>
+                <li><a class="page-title" href="index.html">jStorage</a></li>
+                <li><a href="dropbox.html">Dropbox</a></li>
+                <li><a href="github.html" style="color:#fff">GitHub</a></li>
+            </ul>
             <div style="clear: both"></div>
         </div>
     </div>
 
     <div class="sw sw-pages">
-    <div class="sw-page" data-sw-page-id="/">
-        <div class="container content">
-            <div class="js-hide alert alert-error">
-                <p>
-                    You are only viewing a part of this website due to that javascript is disable or not supported.<br />
-                    To get full functionality from this website you need to enable javascript or visit this website with a browser supporting javascript.
-                </p>
-            </div>
-            <div class="span12 in-page-read-container" style="border-radius: 3px; background-color: #eee;">
-                <h1>jStorage - GitHub</h1>
-                <p>
-                    If you accepted this website to access to your GitHub account you will see 2 files in a repository called <strong>jStorageTest</strong> in your GitHub.
-                    <br /><br />
-                    If you look at the source code of this file you will see how we did it :)
-                </p>
+        <div class="sw-page" data-sw-page-id="/">
+            <div class="container content">
+                <div class="js-hide alert alert-error">
+                    <p>
+                        You are only viewing a part of this website due to that javascript is disable or not supported.<br />
+                        To get full functionality from this website you need to enable javascript or visit this website with a browser supporting javascript.
+                    </p>
+                </div>
+                <div class="span12 in-page-read-container" style="border-radius: 3px; background-color: #eee;">
+                    <h1>jStorage - GitHub</h1>
+                    <p>
+                        If you accepted this website to access to your GitHub account you will see 2 files in a repository called <strong>jStorageTest</strong> in your GitHub.
+                        <br /><br />
+                        If you look at the source code of this file you will see how we did it :)
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-        
+
     <form action="https://github.com/login/oauth/access_token" method="POST">
         <input name="client_id" value="" />
         <input name="client_secret" value="" />
@@ -57,46 +58,44 @@
     </form>
 
     <script src="/jStorage.js"></script>
-        <script src="/jStorage.github.js"></script>
-        <script src="/tests/js/jquery-1.10.1.min.js"></script>
-        <!--<script src="/github.js"></script>-->
-        <script>
+    <script src="/jStorage.github.js"></script>
+    <script>
 
-            // page must be loaded over https to work with dropbox..
+        // page must be loaded over https to work with dropbox..
 
-            /***
-             * 1) name - Name of the storage provider you want to use
-             * 2) callback - callback function to call when storage are ready to be used.
-             * 3) key - dropbox specific info, it requires your application key..
-             ***/
-            var storage = jStorage({
-                'name': 'github',
-                'clientId': 'df3a0f28472a4ad20f39',
-                'clientSecret': 'f3029af7a93f39319b580dea5afbce693bb56876',
-                'access': 'private', // http://developer.github.com/v3/oauth/#scopes
-                'repo': 'jStorageTest',
-                'callback': function (storage, callStatus) {
-                    if (callStatus.isOK) {
-                        storage.set('file1.txt', 'Innehåll 1', function () {
-                            console.log('file1 added');
-                            storage.get('file1.txt', function (file, callStatus) {
-                                if (callStatus.isOK) {
-                                    console.log('file1 read');
-                                }
-                            });
+        /***
+         * 1) name - Name of the storage provider you want to use
+         * 2) callback - callback function to call when storage are ready to be used.
+         * 3) key - dropbox specific info, it requires your application key..
+         ***/
+        var storage = jStorage({
+            'name': 'github',
+            'clientId': 'df3a0f28472a4ad20f39',
+            'clientSecret': 'f3029af7a93f39319b580dea5afbce693bb56876',
+            'access': 'private', // http://developer.github.com/v3/oauth/#scopes
+            'repo': 'jStorageTest',
+            'callback': function (storage, callStatus) {
+                if (callStatus.isOK) {
+                    storage.set('file1.txt', 'Innehåll 1', function () {
+                        console.log('file1 added');
+                        storage.get('file1.txt', function (file, callStatus) {
+                            if (callStatus.isOK) {
+                                console.log('file1 read');
+                            }
                         });
-                        storage.set('file2.txt', 'Innehåll 2', function () {
-                            console.log('file2 added');
-                            storage.get('file2.txt', function (file, callStatus) {
-                                if (callStatus.isOK) {
-                                    console.log('file2 read');
-                                }
-                            });
+                    });
+                    storage.set('file2.txt', 'Innehåll 2', function () {
+                        console.log('file2 added');
+                        storage.get('file2.txt', function (file, callStatus) {
+                            if (callStatus.isOK) {
+                                console.log('file2 read');
+                            }
                         });
-                    }
+                    });
                 }
-            });
+            }
+        });
 
-        </script>
+    </script>
 </body>
 </html>

@@ -14,15 +14,15 @@
     <script>
         document.getElementsByTagName('html')[0].className = 'js';
     </script>
-    <link href="/tests/css/sw.css" rel="stylesheet" />
+    <link href="css/sw.css" rel="stylesheet" />
 </head>
 <body>
     <div class="header">
         <div class="nav">
             <ul class="top-nav">
-                <li><a class="page-title" href="/tests/">jStorage</a></li>
-                <li><a href="/tests/dropbox.html" style="color:#fff">Dropbox</a></li>
-                <li><a href="/tests/github.html">GitHub</a></li>
+                <li><a class="page-title" href="index.html">jStorage</a></li>
+                <li><a href="dropbox.html" style="color:#fff">Dropbox</a></li>
+                <li><a href="github.html">GitHub</a></li>
             </ul>
             <div style="clear: both"></div>
         </div>
@@ -49,43 +49,44 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <script src="/jStorage.js"></script>
-        <script src="/jStorage.dropbox.js"></script>
-        <script>
+    <script src="/jStorage.js"></script>
+    <script src="/jStorage.dropbox.js"></script>
+    <script>
 
-            // page must be loaded over https to work with dropbox..
+        // page must be loaded over https to work with dropbox..
 
-            /***
-             * 1) name - Name of the storage provider you want to use
-             * 2) callback - callback function to call when storage are ready to be used.
-             * 3) key - dropbox specific info, it requires your application key..
-             ***/
-            var storage = jStorage({
-                'name': 'dropbox',
-                'appKey': 'elazxasyxdt1pkc',
-                'callback': function (storage, callStatus) {
-                    if (callStatus.isOK) {
-                        storage.set('file1.txt', 'Innehåll 1', function () {
-                            console.log('file1 added');
-                            storage.get('file1.txt', function (file, callStatus) {
-                                if (callStatus.isOK) {
-                                    console.log('file1 read');
-                                }
-                            });
+        /***
+         * 1) name - Name of the storage provider you want to use
+         * 2) callback - callback function to call when storage are ready to be used.
+         * 3) key - dropbox specific info, it requires your application key..
+         ***/
+        var storage = jStorage({
+            'name': 'dropbox',
+            'appKey': 'elazxasyxdt1pkc',
+            'callback': function (storage, callStatus) {
+                if (callStatus.isOK) {
+                    storage.set('file1.txt', 'Innehåll 1', function () {
+                        console.log('file1 added');
+                        storage.get('file1.txt', function (file, callStatus) {
+                            if (callStatus.isOK) {
+                                console.log('file1 read');
+                            }
                         });
-                        storage.set('file2.txt', 'Innehåll 2', function () {
-                            console.log('file2 added');
-                            storage.get('file2.txt', function (file, callStatus) {
-                                if (callStatus.isOK) {
-                                    console.log('file2 read');
-                                }
-                            });
+                    });
+                    storage.set('file2.txt', 'Innehåll 2', function () {
+                        console.log('file2 added');
+                        storage.get('file2.txt', function (file, callStatus) {
+                            if (callStatus.isOK) {
+                                console.log('file2 read');
+                            }
                         });
-                    }
+                    });
                 }
-            });
+            }
+        });
 
-        </script>
+    </script>
 </body>
 </html>
