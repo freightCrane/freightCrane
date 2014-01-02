@@ -46,7 +46,7 @@
                 // modules responsibility
                 provider.init(this, config);
             } else {
-                error('Storage provider ' + config.name + ' was not loaded.');
+                error('Storage provider "' + config.name + '" was not loaded.');
             }
         },
         get: function (name, callback) {
