@@ -33,7 +33,11 @@
             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
 
-        xmlhttp.onreadystatechange = function() {
+        //xmlhttp.dataType = "json";
+
+        xmlhttp.open(method, address, true);
+
+        xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
                 if (this.status >= 200 && this.status < 300 || this.status === 304) {
                     callback(null, raw ? this.responseText : this.responseText ? JSON.parse(this.responseText) : true, this);
@@ -43,11 +47,11 @@
             }
         };
 
-        xmlhttp.open(method, address, true);
 
-        xmlhttp.setRequestHeader('Accept', 'application/vnd.github.raw+json');
-        xmlhttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-        xmlhttp.setRequestHeader("Origin", window.location.protocol + '//' + window.location.host);
+        //xmlhttp.setRequestHeader('Accept', 'application/vnd.github.raw+json');
+        //xmlhttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        //xmlhttp.setRequestHeader("Origin", window.location.protocol + '//' + window.location.host);
+        //xmlhttp.setRequestHeader('Content-Type', 'application/xml');
         if (token) {
             xmlhttp.setRequestHeader('Authorization', 'token ' + token);
         }
@@ -112,14 +116,20 @@
                     var code = readCookie('jStorage-github-code');
                     writeCookie('jStorage-github-step', 'step3');
 
-                    var addr = 'https://github.com/login/oauth/access_token?client_id=' + config.clientId + '&client_secret=' + config.clientSecret + '&code=' + code + '&redirect_uri=' + redirectUrl + '&callback=alert';
+                    var addr = 'https://github.com/login/oauth/access_token';
+                    var data = 'client_id=' + config.clientId + '&client_secret=' + config.clientSecret + '&code=' + code + '&redirect_uri=' + redirectUrl;
 
-                    var s = document.createElement('script'),
-                        h = document.getElementsByTagName('head')[0];
-                    s.src = addr;
-                    h.appendChild(s);
+                    //var s = document.createElement('script'),
+                    //    h = document.getElementsByTagName('head')[0];
+                    //s.src = addr;
+                    //h.appendChild(s);
 
-                    //githubRequest('POST', addr, false, false, function() {
+                    document.getElementsByName('client_id')[0].value = config.clientId;
+                    document.getElementsByName('client_secret')[0].value = config.clientSecret;
+                    document.getElementsByName('code')[0].value = code;
+                    document.getElementsByName('redirect_uri')[0].value = redirectUrl;
+
+                    //githubRequest('POST', addr, false, data, function() {
                     //    console.log(arguments);
                     //});
 
