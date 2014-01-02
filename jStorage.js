@@ -36,7 +36,7 @@
 
             // Do some inital sanity checking of our input.
             if(config === undefined || !config) error("No config, please consult the readme ;)");
-            if(config['name'] === undefined) error("No name in config.");
+            if(config.name === undefined) error("No name in config.");
 
             if (jStorage.providers[config.name]) {
                 var provider = jStorage.providers[config.name];
