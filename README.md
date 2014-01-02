@@ -5,12 +5,12 @@ With jStorage you just need to learn 1 API and you can easily add support for mo
 
  Storage		|     Status    |     Address    |
 :---------------|:--------------|:---------------
- Dropbox		| <a href="#dropbox">Implemented</a>	|	https://www.dropbox.com/
- GitHub			| In progress	|	https://github.com/
- MS Azure		| Planned 		|	https://account.windowsazure.com/Home/Index
- SkyDrive 		| Planned 		|	https://skydrive.live.com/
- Google Drive 	| Planned 		|	https://drive.google.com/
- Box			| Planned 		|	https://www.box.com/
+ Dropbox		| [Implemented](#preparing-dropbox)		| https://www.dropbox.com/
+ GitHub			| [In progress](#preparing-github)		| https://github.com/
+ MS Azure		| Planned 								| https://account.windowsazure.com/Home/Index
+ SkyDrive 		| Planned 								| https://skydrive.live.com/
+ Google Drive 	| Planned 								| https://drive.google.com/
+ Box			| Planned 								| https://www.box.com/
 
 ##Demo##
 
@@ -22,7 +22,7 @@ With jStorage you just need to learn 1 API and you can easily add support for mo
 Depending on the storage provider you want to use you need to do some steps at the provider to prepare it for usage.
 Below we are listing the steps needed for every provider.
 
-<a name="dropbox">
+
 ###Preparing Dropbox###
 
 1. Go to: https://www.dropbox.com/developers/apps
@@ -34,7 +34,7 @@ Below we are listing the steps needed for every provider.
 7. Write a address into "OAuth redirect URIs", this is the address the user will be sent to after giving your app permissions. Please note that it MUST to start with "https://" to work if you are using a DNS.
 
 
-_Preparing GitHub_
+###Preparing GitHub###
 
 1. Go to: https://github.com/settings/applications
 2. Click the "Register new application" button.
