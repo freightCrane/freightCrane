@@ -36,6 +36,9 @@
             if (jStorage.providers[config.name]) {
                 var provider = jStorage.providers[config.name];
                 this._provider = provider;
+
+                // Calling the callback now becomes the provider
+                // modules responsibility
                 provider.init(this, config);
             } else {
                 error('Storage provider ' + config.name + ' was not loaded.');
@@ -69,6 +72,8 @@
         }
     };
 
+    // Placeholder for our provider modules.
+    // Each module will register itself here.
     jStorage.providers = jStorage.prototype = {
 
     };
