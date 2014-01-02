@@ -15,6 +15,11 @@
 // http://stackoverflow.com/questions/135448/how-do-i-check-to-see-if-an-object-has-a-property-in-javascript#answer-135568
 (function (window, undefined) {
     // Upgrading to EcmaScript 5, and generating more helpful execptions and errors.
+    // Even though: http://bugs.jquery.com/ticket/13335, we've decided to go this path
+    // for now to write better code. We only test in modern browsers right now. If
+    // this bothers you(you use Firefox < 18 and your debug trace crashes it f.x.),
+    // poke us and we'll bake a version without it. For now, deal with it, since we
+    // don't have any legacy browsers to test with ;)
     "use strict";
 
     var jStorage = function (config) {
