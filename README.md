@@ -89,6 +89,19 @@ var storage = jStorage({
 });
 ```
 
+_localStorage_
+
+```js
+var storage = jStorage({
+	'name': 'localstorage',
+	'callback': function(storage, callStatus) {
+		if (callStatus.isOK) {
+			// github storage are now ready to be used.
+		}
+	}
+});
+```
+
 
 ###get(file_path, callback(file, callStatus))###
 
