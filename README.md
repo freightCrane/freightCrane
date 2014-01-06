@@ -7,7 +7,7 @@ With jStorage you just need to learn 1 API and you can easily add support for mo
 :---------------|:--------------|:---------------
  Dropbox		| [Implemented](#preparing-dropbox)		| https://www.dropbox.com/
  GitHub			| [In progress](#preparing-github)		| https://github.com/
- localStorage	| [In progress]							| https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Storage
+ localStorage	| In progress							| https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Storage
  MS Azure		| Planned 								| https://account.windowsazure.com/Home/Index
  SkyDrive 		| Planned 								| https://skydrive.live.com/
  Google Drive 	| Planned 								| https://drive.google.com/
