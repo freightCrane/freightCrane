@@ -7,6 +7,32 @@
 
             // TODO: Verify that browser support localStorage
             // TODO: call the callback function with result
+
+            // check if browser support localStorage AND has all methods we need.
+            this.hasLocalStorage = "localStorage" in window
+                && "setItem" in window["localStorage"]
+                && "getItem" in window["localStorage"]
+                && "removeItem" in window["localStorage"]
+                && "setItem" in window["localStorage"];
+
+            var callStatus = false;
+            if (hasLocalStorage) {
+                callStatus = {
+                    'isOK': true,
+                    'code': 0,
+                    'msg': ''
+                };
+            } else {
+                callStatus = {
+                    'isOK': false,
+                    'code': -1,
+                    'msg': 'Browser doesn\'t support localStorage. User might be in "private mode" or have a old browser.'
+                };
+            }
+
+            if (self._hasCallback) {
+                self._config.callback(wrapper, callStatus);
+            }
         },
         get: function (name, callback) {
             var self = this;
