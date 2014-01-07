@@ -9,14 +9,14 @@
             // TODO: call the callback function with result
 
             // check if browser support localStorage AND has all methods we need.
-            this.hasLocalStorage = "localStorage" in window
+            this._hasLocalStorage = "localStorage" in window
                 && "setItem" in window["localStorage"]
                 && "getItem" in window["localStorage"]
                 && "removeItem" in window["localStorage"]
                 && "setItem" in window["localStorage"];
 
             var callStatus = false;
-            if (hasLocalStorage) {
+            if (this._hasLocalStorage) {
                 callStatus = {
                     'isOK': true,
                     'code': 0,
