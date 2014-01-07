@@ -17,6 +17,7 @@
         init: function (wrapper, config) {
             var self = this;
             this._config = config;
+            this._hasCallback = config && typeof (config.callback) === "function";
 
             this.client = new Dropbox.Client({ key: config.appKey });
 
@@ -34,7 +35,9 @@
                             'code': 0,
                             'msg': ''
                         };
-                        self._config.callback(wrapper, callStatus);
+                        if (self._hasCallback) {
+                            self._config.callback(wrapper, callStatus);
+                        }
                     } else {
                         self.client.authenticate(function (error3, client) {
                             if (!error3) {
@@ -60,7 +63,9 @@
                                     };
                                 }
                             }
-                            self._config.callback(wrapper, callStatus);
+                            if (self._hasCallback) {
+                                self._config.callback(wrapper, callStatus);
+                            }
                         });
                     }
                 });
@@ -69,6 +74,7 @@
         },
         get: function (name, callback) {
             var self = this;
+            var hasCallback = typeof (callback) === "function";
 
             this.client.readFile(name, function (error, content, info) {
                 if (error) {
@@ -86,7 +92,9 @@
                         'msg': error.response.error
                     };
 
-                    callback(obj, callStatus);
+                    if (hasCallback) {
+                        callback(obj, callStatus);
+                    }
                 } else {
                     var obj = {
                         'name': info.path,
@@ -101,12 +109,15 @@
                         'msg': ''
                     };
 
-                    callback(obj, callStatus);
+                    if (hasCallback) {
+                        callback(obj, callStatus);
+                    }
                 }
             });
         },
         set: function (name, content, callback) {
             var self = this;
+            var hasCallback = typeof (callback) === "function";
 
             this.client.writeFile(name, content, function (error, info) {
                 if (error) {
@@ -123,7 +134,10 @@
                         'msg': error.response.error
                     };
 
-                    callback(obj, callStatus);
+                    if (hasCallback)
+                    {
+                        callback(obj, callStatus);
+                    }
                 } else {
                     var obj = {
                         'name': info.path,
@@ -137,12 +151,15 @@
                         'msg': ''
                     };
 
-                    callback(obj, callStatus);
+                    if (hasCallback) {
+                        callback(obj, callStatus);
+                    }
                 }
             });
         },
         del: function (name, callback) {
             var self = this;
+            var hasCallback = typeof (callback) === "function";
 
             this.client.delete(name, function (error, info) {
                 if (error) {
@@ -151,7 +168,9 @@
                         'code': -1,
                         'msg': error.response.error
                     };
-                    callback(callStatus);
+                    if (hasCallback) {
+                        callback(callStatus);
+                    }
                 } else {
                     var callStatus = {
                         'isOK': true,
@@ -159,12 +178,15 @@
                         'msg': ''
                     };
 
-                    callback(callStatus);
+                    if (hasCallback) {
+                        callback(callStatus);
+                    }
                 }
             });
         },
         list: function (name, callback) {
             var self = this;
+            var hasCallback = typeof (callback) === "function";
 
             this.client.readdir(name, function (error, filenames, dirInfo, fileInfos) {
                 var lists = [];
@@ -175,7 +197,9 @@
                         'code': -1,
                         'msg': error.response.error
                     };
-                    callback(lists, callStatus);
+                    if (hasCallback) {
+                        callback(lists, callStatus);
+                    }
                 } else {
                     for (var i = 0; i < fileInfos.length; i++) {
                         var info = fileInfos[i];
@@ -193,12 +217,15 @@
                         'msg': ''
                     };
 
-                    callback(lists, callStatus);
+                    if (hasCallback) {
+                        callback(lists, callStatus);
+                    }
                 }
             });
         },
         exists: function (name, callback) {
             var self = this;
+            var hasCallback = typeof (callback) === "function";
 
             this.client.readFile(name, function (error, content, info) {
                 if (error) {
@@ -209,8 +236,10 @@
                             'msg': ''
                         };
 
-                        // File didn't exist
-                        callback(false, callStatus);
+                        if (hasCallback) {
+                            // File didn't exist
+                            callback(false, callStatus);
+                        }
                     } else {
                         var callStatus = {
                             'isOK': false,
@@ -218,7 +247,9 @@
                             'msg': error.response.error
                         };
 
-                        callback(false, callStatus);
+                        if (hasCallback) {
+                            callback(false, callStatus);
+                        }
                     }
                 } else {
 
@@ -228,8 +259,10 @@
                         'msg': ''
                     };
 
-                    // File exists
-                    callback(true, callStatus);
+                    if (hasCallback) {
+                        // File exists
+                        callback(true, callStatus);
+                    }
                 }
             });
         }
