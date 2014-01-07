@@ -131,9 +131,8 @@
             var hasCallback = typeof (callback) === "function";
 
             var exists = name in window.localStorage;
-            // TODO: call the callback function with result
-            // TODO: Only return successfull call if browser supports localStorage.
 
+            // TODO: Only return successfull call if browser supports localStorage.
             var callStatus = {
                 'isOK': true,
                 'code': 0,
