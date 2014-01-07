@@ -3,15 +3,15 @@
 jStorage helps you get started with using cloud storage (Like Dropbox or GitHub).
 With jStorage you just need to learn 1 API and you can easily add support for more providers in your project.
 
- Storage		|     Status    |     Address    |
-:---------------|:--------------|:---------------
- Dropbox		| [Implemented](#preparing-dropbox)		| https://www.dropbox.com/
- GitHub			| [In progress](#preparing-github)		| https://github.com/
- localStorage	| In progress							| https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Storage
- MS Azure		| Planned 								| https://account.windowsazure.com/Home/Index
- SkyDrive 		| Planned 								| https://skydrive.live.com/
- Google Drive 	| Planned 								| https://drive.google.com/
- Box			| Planned 								| https://www.box.com/
+ Storage		                |     Status    |     Address   |
+:-------------------------------|:--------------|:---------------
+ [Dropbox](#preparing-dropbox)	| Implemented	| https://www.dropbox.com/
+ [GitHub](#preparing-github)	| In progress	| https://github.com/
+ localStorage					| In progress	| https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Storage
+ MS Azure						| Planned 		| https://account.windowsazure.com/Home/Index
+ SkyDrive 						| Planned 		| https://skydrive.live.com/
+ Google Drive 					| Planned 		| https://drive.google.com/
+ Box							| Planned 		| https://www.box.com/
 
 ##Demo##
 
@@ -81,6 +81,8 @@ _GitHub_
 ```js
 var storage = jStorage({
 	'name': 'github',
+	'clientId': 'df3a0f28472a4ad20f39',
+	'tokenService': 'https://githubtokenservice-jstorage-flowertwig-org.loopiasecure.com/', // You SHOULD use your own service for additional security
 	'callback': function(storage, callStatus) {
 		if (callStatus.isOK) {
 			// github storage are now ready to be used.
