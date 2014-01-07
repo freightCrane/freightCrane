@@ -56,6 +56,7 @@ You can use all of them at the same time.
 ```html
 <script src="jStorage.dropbox.js">
 <script src="jStorage.github.js">
+<script src="jStorage.localstorage.js">
 ```
 
 ##API##
