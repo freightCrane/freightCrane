@@ -93,7 +93,7 @@
 
             // TODO: Only return successfull call if browser supports localStorage.
             if (hasCallback) {
-                callback(obj, callStatus);
+                callback(callStatus);
             }
         },
         list: function (name, callback) {
