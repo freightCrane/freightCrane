@@ -4,6 +4,7 @@
         init: function (wrapper, config) {
             var self = this;
             this._config = config;
+            this._hasCallback = config && typeof (config.callback) === "function";
 
             // TODO: Verify that browser support localStorage
             // TODO: call the callback function with result
@@ -36,19 +37,51 @@
         },
         get: function (name, callback) {
             var self = this;
+            var hasCallback = typeof (callback) === "function";
             var content = window.localStorage.getItem(name);
 
-            // TODO: call the callback function with result
+            var obj = {
+                'name': name,
+                'size': content.length,
+                'mime-type': 'text/plain',
+                'modified': new Date(),
+                'data': content
+            };
+            var callStatus = {
+                'isOK': true,
+                'code': 0,
+                'msg': ''
+            };
+
+            if (hasCallback) {
+                callback(obj, callStatus);
+            }
         },
         set: function (name, content, callback) {
             var self = this;
+            var hasCallback = typeof (callback) === "function";
 
             window.localStorage.setItem(name, content);
 
-            // TODO: call the callback function with result
+            var obj = {
+                'name': name,
+                'size': content ? content.length : 0,
+                'mime-type': 'plain/text',
+                'modified': new Date()
+            };
+            var callStatus = {
+                'isOK': true,
+                'code': 0,
+                'msg': ''
+            };
+
+            if (hasCallback) {
+                callback(obj, callStatus);
+            }
         },
         del: function (name, callback) {
             var self = this;
+            var hasCallback = typeof (callback) === "function";
 
             window.localStorage.removeItem(name);
 
@@ -56,6 +89,7 @@
         },
         list: function (name, callback) {
             var self = this;
+            var hasCallback = typeof (callback) === "function";
 
             // TODO: Add logic to see if key is in "virtual" folder and then return it if it is..
             for (var key in window.localStorage) {
@@ -66,6 +100,7 @@
         },
         exists: function (name, callback) {
             var self = this;
+            var hasCallback = typeof (callback) === "function";
 
             var exists = name in window.localStorage;
             // TODO: call the callback function with result
