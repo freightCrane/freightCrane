@@ -6,9 +6,7 @@
             this._config = config;
             this._hasCallback = config && typeof (config.callback) === "function";
 
-            // TODO: Verify that browser support localStorage
-            // TODO: call the callback function with result
-
+            // Verifying that browser support localStorage
             // check if browser support localStorage AND has all methods we need.
             this._hasLocalStorage = "localStorage" in window
                 && "setItem" in window["localStorage"]
@@ -53,6 +51,7 @@
                 'msg': ''
             };
 
+            // TODO: Only return successfull call if browser supports localStorage.
             if (hasCallback) {
                 callback(obj, callStatus);
             }
@@ -75,6 +74,7 @@
                 'msg': ''
             };
 
+            // TODO: Only return successfull call if browser supports localStorage.
             if (hasCallback) {
                 callback(obj, callStatus);
             }
@@ -85,18 +85,46 @@
 
             window.localStorage.removeItem(name);
 
-            // TODO: call the callback function with result
+            var callStatus = {
+                'isOK': true,
+                'code': 0,
+                'msg': ''
+            };
+
+            // TODO: Only return successfull call if browser supports localStorage.
+            if (hasCallback) {
+                callback(obj, callStatus);
+            }
         },
         list: function (name, callback) {
             var self = this;
             var hasCallback = typeof (callback) === "function";
 
-            // TODO: Add logic to see if key is in "virtual" folder and then return it if it is..
+            var lists = [];
+
+            // logic to see if key is in "virtual" folder and then return it if is..
             for (var key in window.localStorage) {
-                //console.log(key);
+                if (key.indexOf(name) == 0) {
+                    // TODO: set size value
+                    lists.push({
+                        'name': key,
+                        'size': 0,
+                        'mime-type': 'plain/text',
+                        'modified': new Date()
+                    });
+                }
             }
 
-            // TODO: call the callback function with result
+            var callStatus = {
+                'isOK': true,
+                'code': 0,
+                'msg': ''
+            };
+
+            // TODO: Only return successfull call if browser supports localStorage.
+            if (hasCallback) {
+                callback(lists, callStatus);
+            }
         },
         exists: function (name, callback) {
             var self = this;
@@ -104,6 +132,18 @@
 
             var exists = name in window.localStorage;
             // TODO: call the callback function with result
+            // TODO: Only return successfull call if browser supports localStorage.
+
+            var callStatus = {
+                'isOK': true,
+                'code': 0,
+                'msg': ''
+            };
+
+            if (hasCallback) {
+                // File exists
+                callback(exists, callStatus);
+            }
         }
     };
 })(jStorage);
