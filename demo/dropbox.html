@@ -46,47 +46,86 @@
                         <strong>/Apps/jStorage - Limited/</strong>
                         <br /><br />
                         If you look at the source code of this file you will see how we did it :)
+                        <br /><br />
                     </p>
+
+                    <h2>Example:</h2>
+                    <div data-bind="visible: !isReady()">
+                        <p>Loading example...</p>
+                    </div>
+                    <div data-bind="visible: isReady()">
+                        <p>Update text boxes, wait for it to finish updating and then refresh page to see value presistent.</p>
+
+                        <p>file1.txt: <input data-bind="value: file1, valueUpdate: 'keyup'" /> <span data-bind="visible: updatingFile1()">Updating value on server...</span></p>
+                        <p>file2.txt: <input data-bind="value: file2, valueUpdate: 'keyup'" /> <span data-bind="visible: updatingFile2()">Updating value on server...</span></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="js/knockout-2.3.0.js"></script>
     <script src="/jStorage.js"></script>
     <script src="/jStorage.dropbox.js"></script>
     <script>
 
-        // page must be loaded over https to work with dropbox..
+        // Here's my data model
+        var ViewModel = function (value1, value2) {
+            var self = this;
+            this.file1 = ko.observable(value1);
+            this.file2 = ko.observable(value2);
 
-        /***
-         * 1) name - Name of the storage provider you want to use
-         * 2) callback - callback function to call when storage are ready to be used.
-         * 3) key - dropbox specific info, it requires your application key..
-         ***/
-        var storage = jStorage({
-            'name': 'dropbox',
-            'appKey': 'elazxasyxdt1pkc',
-            'callback': function (storage, callStatus) {
-                if (callStatus.isOK) {
-                    storage.set('file1.txt', 'Innehåll 1', function () {
-                        console.log('file1 added');
+            this.updatingFile1 = ko.observable(false);
+            this.updatingFile2 = ko.observable(false);
+
+            this.isReady = ko.observable(false);
+            this.isAvailable = ko.observable(false);
+
+            this.storage = jStorage({
+                'name': 'dropbox',
+                'appKey': 'elazxasyxdt1pkc',
+                'callback': function (storage, callStatus) {
+                    self.isReady(true);
+
+                    if (callStatus.isOK) {
+                        self.isAvailable(true);
+
                         storage.get('file1.txt', function (file, callStatus) {
                             if (callStatus.isOK) {
-                                console.log('file1 read');
+                                self.file1(file.data);
                             }
                         });
-                    });
-                    storage.set('file2.txt', 'Innehåll 2', function () {
-                        console.log('file2 added');
+
                         storage.get('file2.txt', function (file, callStatus) {
                             if (callStatus.isOK) {
-                                console.log('file2 read');
+                                self.file2(file.data);
                             }
                         });
+                    }
+                }
+            });
+
+            this.file1.subscribe(function () {
+                if (self.isAvailable()) {
+                    self.updatingFile1(true);
+                    self.storage.set('file1.txt', self.file1(), function () {
+                        self.updatingFile1(false);
                     });
                 }
-            }
-        });
+            });
+
+            this.file2.subscribe(function () {
+                if (self.isAvailable()) {
+                    self.updatingFile2(true);
+                    self.storage.set('file2.txt', self.file2(), function () {
+                        self.updatingFile2(false);
+                    });
+                }
+            });
+
+        };
+
+        ko.applyBindings(new ViewModel("Start value 1", "Start value 2")); // This makes Knockout get to work
 
     </script>
 </body>
