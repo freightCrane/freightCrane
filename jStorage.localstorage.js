@@ -40,7 +40,7 @@
 
             var obj = {
                 'name': name,
-                'size': content.length,
+                'size': content ? content.length : 0,
                 'mime-type': 'text/plain',
                 'modified': new Date(),
                 'data': content
