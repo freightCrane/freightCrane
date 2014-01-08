@@ -1,7 +1,7 @@
 test( "Core sanity checks", function() {
     throws(function(){
         jStorage();
-    }, /^jStorage: No config, please consult the readme ;\)$/, "No config object should throw error");
+    }, /^jStorage: No config, please consult the readme ;\)$/, "Missing config object should throw error");
     throws(function(){
         jStorage({});
     }, /^jStorage: No name in config.$/, "Empty config object should throw error");
