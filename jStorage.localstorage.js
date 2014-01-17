@@ -1,7 +1,7 @@
 (function (jStorage, undefined) {
 
     jStorage.providers.localstorage = jStorage.providers.prototype = {
-        init: function (wrapper, config) {
+    	init: function (wrapper, config) {
             var self = this;
             this._config = config;
             this._hasCallback = config && typeof (config.callback) === "function";
@@ -104,10 +104,25 @@
 
             // logic to see if key is in "virtual" folder and then return it if is..
             for (var key in window.localStorage) {
-                if (key.indexOf(name) == 0) {
+            	if (key.indexOf(name) == 0) {
+		            var tmp = key.replace(name, '');
+            		var tmpIndex = tmp.indexOf('/');
+					// Remove leading slash 
+					if (tmpIndex == 0) {
+						tmp = tmp.substr(1);
+						tmpIndex = tmp.indexOf('/');
+					}
+
+					// This is a subfolder...
+					if (tmpIndex > 0) {
+						tmp = tmp.substr(0, tmpIndex);
+					}
+
+		            tmp = name + tmp;
+
                     // TODO: set size value
                     lists.push({
-                        'name': key,
+                        'name': tmp,
                         'size': 0,
                         'mime-type': 'plain/text',
                         'modified': new Date()
