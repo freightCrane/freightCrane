@@ -191,7 +191,8 @@
             this.client.readdir(name, function (error, filenames, dirInfo, fileInfos) {
                 var lists = [];
 
-                if (error) {
+				// If there is an error and it was not just the 404 (page not found) error, return error message.
+                if (error && error.status != 404) {
                     var callStatus = {
                         'isOK': false,
                         'code': -1,
@@ -201,17 +202,20 @@
                         callback(lists, callStatus);
                     }
                 } else {
-                    for (var i = 0; i < fileInfos.length; i++) {
-                        var info = fileInfos[i];
-                        lists.push({
-                            'name': info.path,
-                            'size': info.size,
-                            'mime-type': info.mimeType,
-                            'modified': info.modifiedAt
-                        });
-                    }
+					// Only loop trough fileinfos if we have them (We don't have them for 404 for example)
+	                if (fileInfos) {
+		                for (var i = 0; i < fileInfos.length; i++) {
+			                var info = fileInfos[i];
+			                lists.push({
+				                'name': info.path,
+				                'size': info.size,
+				                'mime-type': info.mimeType,
+				                'modified': info.modifiedAt
+			                });
+		                }
+	                }
 
-                    var callStatus = {
+	                var callStatus = {
                         'isOK': true,
                         'code': 0,
                         'msg': ''
