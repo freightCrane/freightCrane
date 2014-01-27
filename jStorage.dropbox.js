@@ -64,7 +64,11 @@
                                 }
                             }
                             if (self._hasCallback) {
-                                self._config.callback(wrapper, callStatus);
+								try{
+	                                self._config.callback(wrapper, callStatus);
+								} catch (e) {
+									// TODO: handle error
+								}
                             }
                         });
                     }

@@ -30,9 +30,13 @@
             }
 
             if (self._hasCallback) {
-                self._config.callback(wrapper, callStatus);
+	            try {
+		            self._config.callback(wrapper, callStatus);
+	            } catch (e) {
+		            // TODO: handle error
+	            }
             }
-        },
+	    },
         get: function (name, callback) {
             var self = this;
             var hasCallback = typeof (callback) === "function";
@@ -102,7 +106,8 @@
 
             var lists = [];
 
-            // logic to see if key is in "virtual" folder and then return it if is..
+	        var keys = {};
+	        // logic to see if key is in "virtual" folder and then return it if is..
             for (var key in window.localStorage) {
             	if (key.indexOf(name) == 0) {
 		            var tmp = key.replace(name, '');
@@ -118,16 +123,20 @@
 						tmp = tmp.substr(0, tmpIndex);
 					}
 
-		            tmp = name + tmp;
+					tmp = name + tmp;
 
-                    // TODO: set size value
-                    lists.push({
-                        'name': tmp,
-                        'size': 0,
-                        'mime-type': 'plain/text',
-                        'modified': new Date()
-                    });
-                }
+					// Make sure subfolders are only added once
+					if (!(tmp in keys)) {
+			            // TODO: set size value
+			            lists.push({
+				            'name': tmp,
+				            'size': 0,
+				            'mime-type': 'plain/text',
+				            'modified': new Date()
+			            });
+			            keys[tmp] = true;
+		            }
+	            }
             }
 
             var callStatus = {
