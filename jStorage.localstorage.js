@@ -87,7 +87,13 @@
             var self = this;
             var hasCallback = typeof (callback) === "function";
 
-            window.localStorage.removeItem(name);
+        	// logic to see if key is in "virtual" folder and then return it if is..
+            for (var key in window.localStorage) {
+            	if (key.indexOf(name) == 0) {
+            		window.localStorage.removeItem(key);
+            	}
+            }
+
 
             var callStatus = {
                 'isOK': true,
