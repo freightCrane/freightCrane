@@ -15,7 +15,7 @@ With jStorage you just need to learn 1 API and you can easily add support for mo
 
 ##Demo##
 
-<https://jstorage-flowertwig-org.loopiasecure.com/demo/>
+<https://jstorage.azurewebsites.net/demo/>
 
 
 ##Prepare provider(s)##
