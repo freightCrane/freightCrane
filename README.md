@@ -3,7 +3,7 @@
 jStorage helps you get started with using cloud storage (Like Dropbox or GitHub).
 With jStorage you just need to learn 1 API and you can easily add support for more providers in your project.
 
- Storage		                |     Status    |     Address   |
+ Storage		                |     Status    |     Read more about storage   |
 :-------------------------------|:--------------|:---------------
  [Dropbox](#preparing-dropbox)	| Implemented	| https://www.dropbox.com/
  localStorage					| Implemented	| https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Storage
@@ -99,7 +99,7 @@ var storage = jStorage({
 	'name': 'localstorage',
 	'callback': function(storage, callStatus) {
 		if (callStatus.isOK) {
-			// github storage are now ready to be used.
+			// local storage are now ready to be used.
 		}
 	}
 });
