@@ -25,8 +25,10 @@
             this.client.authenticate({ interactive: false }, function (error) {
                 // TODO: Should we force authentication here so developers know everything is ready in the next step?
 
-                // We need to try to read from storage to know if it was successfull or not...
-                // Don't know why this is needed, the error variable is always null for some reason.
+                // Dropbox API provides the param 'error' above to check if we are authenticated - unfortunately,
+                // it always returns true. So to test if we are authenticated we do a request for a nonexisting
+                // file. If we get a 404 back, we are authenticated. Otherwise we get a 403 back and need to
+                // initiate a new authentication.
                 self.client.readFile("", function (error2, data) {
                     var callStatus = false;
                     if (!error2 || error2.status == 404) {
