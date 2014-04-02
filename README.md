@@ -1,5 +1,7 @@
 #jStorage - Storage made Easy#
 
+[![Build Status](https://travis-ci.org/flowertwig-org/jStorage.svg?branch=master)](https://travis-ci.org/flowertwig-org/jStorage)
+
 jStorage helps you get started with using cloud storage (Like Dropbox or GitHub).
 With jStorage you just need to learn 1 API and you can easily add support for more providers in your project.
 
