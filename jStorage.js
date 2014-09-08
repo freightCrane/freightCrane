@@ -72,7 +72,7 @@
         exists: function (name, callback) {
             //console.log('exists');
             if (this._provider) {
-                this._provider.exists();
+                this._provider.exists(name, callback);
             }
         }
     };
