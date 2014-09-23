@@ -15,7 +15,11 @@
 
     jStorage.providers.dropbox = jStorage.providers.prototype = {
         init: function (wrapper, config) {
-            var self = this;
+        	// As we know that jStorage dropbox storage module requires an appKey, make sure we have it before going any future.
+        	if (!('appKey' in config)) {
+        		throw 'Argument "config" need a property called "appKey". Get yours from: https://dropbox.com/developers/apps';
+        	}
+        	var self = this;
             this._config = config;
             this._hasCallback = config && typeof (config.callback) === "function";
 
