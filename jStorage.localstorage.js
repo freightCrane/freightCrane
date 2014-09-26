@@ -129,13 +129,14 @@
 						tmp = tmp.substr(0, tmpIndex);
 					}
 
-					tmp = name + tmp;
+					var fullname = name + tmp;
 
 					// Make sure subfolders are only added once
 					if (!(tmp in keys)) {
 			            // TODO: set size value
 			            lists.push({
-				            'name': tmp,
+			            	'path': fullname,
+							'name': tmp,
 				            'size': 0,
 				            'mime-type': 'plain/text',
 				            'modified': new Date()

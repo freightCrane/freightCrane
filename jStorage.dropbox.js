@@ -14,7 +14,7 @@
     /* Content from: https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js : End */
 
     jStorage.providers.dropbox = jStorage.providers.prototype = {
-        init: function (wrapper, config) {
+    	init: function (wrapper, config) {
         	// As we know that jStorage dropbox storage module requires an appKey, make sure we have it before going any future.
         	if (!('appKey' in config)) {
         		throw 'Argument "config" need a property called "appKey". Get yours from: https://dropbox.com/developers/apps';
@@ -215,9 +215,10 @@
 					// Only loop trough fileinfos if we have them (We don't have them for 404 for example)
 	                if (fileInfos) {
 		                for (var i = 0; i < fileInfos.length; i++) {
-			                var info = fileInfos[i];
+		                	var info = fileInfos[i];
 			                lists.push({
-				                'name': info.path,
+			                	'path': info.path,
+								'name': info.name,
 				                'size': info.size,
 				                'mime-type': info.mimeType,
 				                'modified': info.modifiedAt
