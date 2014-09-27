@@ -1,7 +1,7 @@
 var providersToTest = [
 	{ 'name': 'localstorage', 'config': {}, 'requireSecure': false },
-	{ 'name': 'dropbox', 'config': { 'appKey': 'elazxasyxdt1pkc' }, 'requireSecure': true },
-	{ 'name': 'github', 'config': {}, 'requireSecure': true }
+	{ 'name': 'dropbox', 'config': { 'appKey': 'elazxasyxdt1pkc' }, 'requireSecure': true }
+	//{ 'name': 'github', 'config': {}, 'requireSecure': true }
 ];
 
 function isValidStorage(storage, assert, text) {
@@ -11,6 +11,12 @@ function isValidStorage(storage, assert, text) {
 	assert.ok('del' in storage, text + " has del function");
 	assert.ok('list' in storage, text + " has list function");
 	assert.ok('exists' in storage, text + " has exists function");
+}
+
+function isValidStatus(status, assert, text) {
+	assert.ok('isOK' in status, text + " has isOK function");
+	assert.ok('code' in status, text + " has code function");
+	assert.ok('msg' in status, text + " has msg function");
 }
 
 QUnit.module("Core");
@@ -75,14 +81,18 @@ function testStorage(name, config, requireSecure) {
 			isValidStorage(storage, assert, "callback object");
 
 			storage.get('jstorage-unit-test1', function (obj, status) {
+				isValidStatus(status, assert, "get status");
 				assert.ok(!status.isOK, "Get content, should get no hit.");
 				storage.set('jstorage-unit-test1', 'Test content', function (obj2, status2) {
+					isValidStatus(status2, assert, "set status");
 					assert.ok(status2.isOK, "Set content, successfully created content.");
 					storage.get('jstorage-unit-test1', function (obj3, status3) {
+						isValidStatus(status3, assert, "get status");
 						assert.ok(status3.isOK, "Get content, callback was successfully called.");
 						assert.ok(obj3.data == 'Test content', "Get content, successfully got correct content.");
 
 						storage.del('jstorage-unit-test1', function (status4) {
+							isValidStatus(status4, assert, "del status");
 							assert.ok(status4.isOK, "successfully removed content.");
 							QUnit.start();
 						});
@@ -95,6 +105,31 @@ function testStorage(name, config, requireSecure) {
 		isValidStorage(obj, assert, "jStorage function return object");
 
 		//assert.ok(storage.constructor.name == 'jStorage.fn.jStorage.init', "object created is of correct type");
+	});
+
+	QUnit.asyncTest("can list storage", function (assert) {
+		config.name = name;
+		config.callback = function (storage) {
+			storage.list('/jstorage-unit-test2/', function (list, status) {
+				isValidStatus(status, assert, "list status");
+				assert.ok(!status.isOK, "list folder content, should get no hit.");
+
+				storage.set('/jstorage-unit-test2/content1', 'Test content', function (obj2, status2) {
+					storage.set('/jstorage-unit-test2/content2', 'Test content2, what todo.', function (obj3, status3) {
+						storage.list('/jstorage-unit-test2/', function (list2, status3) {
+							assert.ok(status3.isOK, "list folder content, status is correct.");
+							assert.ok(list2.length == 2, "number of files in folder is correct");
+							storage.del('/jstorage-unit-test2', function (status4) {
+								isValidStatus(status4, assert, "del list status");
+								assert.ok(status4.isOK, "successfully removed folder.");
+								QUnit.start();
+							});
+						});
+					});
+				});
+			});
+		}
+		var obj = jStorage(config);
 	});
 }
 

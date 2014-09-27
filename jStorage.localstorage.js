@@ -149,7 +149,7 @@
             }
 
             var callStatus = {
-                'isOK': true,
+                'isOK': lists.length ? true : false,
                 'code': 0,
                 'msg': ''
             };
