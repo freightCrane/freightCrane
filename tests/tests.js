@@ -1,11 +1,11 @@
 var providersToTest = [
-	{ 'name': 'localstorage' },
-	{ 'name': 'dropbox' },
-	{ 'name': 'github' }
+	{ 'name': 'localstorage', 'config': {}, 'requireSecure': false },
+	{ 'name': 'dropbox', 'config': {}, 'requireSecure': true },
+	{ 'name': 'github', 'config': {}, 'requireSecure': true }
 ];
 
 QUnit.module("Core");
-QUnit.test("Core sanity checks", function () {
+QUnit.test("sanity checks", function () {
 	throws(function () {
 		jStorage();
 	}, /^jStorage: No config, please consult the readme ;\)$/, "Missing config object should throw error");
@@ -50,14 +50,23 @@ QUnit.test("Only has expected providers", function (assert) {
 	}
 });
 
-for (var i = 0; i < providersToTest.length; i++) {
-	var storageInfo = providersToTest[i];
-	QUnit.module(storageInfo.name);
-	QUnit.test("pling", function (assert) {
-		assert.ok(true, "This test is ok");
+function testStorage(name, config, requireSecure) {
+	QUnit.module(name);
+	QUnit.test("sanity check", function (assert) {
+		assert.ok('init' in jStorage.providers[name], "has init function");
+		assert.ok('get' in jStorage.providers[name], "has get function");
+		assert.ok('set' in jStorage.providers[name], "has set function");
+		assert.ok('del' in jStorage.providers[name], "has del function");
+		assert.ok('list' in jStorage.providers[name], "has list function");
+		assert.ok('exists' in jStorage.providers[name], "has exists function");
+		if (requireSecure && window.location.protocol !== "https:") {
+			assert.ok(false, "require https connection (Change address to page)");
+		}
 	});
+
 }
-//QUnit.test("Provider");
 
-
-//test()
+for (var providerIndex = 0; providerIndex < providersToTest.length; providerIndex++) {
+	var storageInfo = providersToTest[providerIndex];
+	testStorage(storageInfo.name, storageInfo.config, storageInfo.requireSecure);
+}
