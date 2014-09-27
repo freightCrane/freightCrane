@@ -1,6 +1,6 @@
 (function (jStorage, undefined) {
 
-    jStorage.providers.localstorage = jStorage.providers.prototype = {
+    jStorage.providers.localstorage = {
     	init: function (wrapper, config) {
             var self = this;
             this._config = config;

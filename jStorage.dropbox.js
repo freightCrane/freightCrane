@@ -13,7 +13,7 @@
     }.call(this);
     /* Content from: https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js : End */
 
-    jStorage.providers.dropbox = jStorage.providers.prototype = {
+    jStorage.providers.dropbox = {
     	init: function (wrapper, config) {
         	// As we know that jStorage dropbox storage module requires an appKey, make sure we have it before going any future.
         	if (!('appKey' in config)) {

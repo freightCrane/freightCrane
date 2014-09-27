@@ -79,7 +79,7 @@
 
     // Placeholder for our provider modules.
     // Each module will register itself here.
-    jStorage.providers = jStorage.prototype = {
+    jStorage.providers = {
 
     };
 
