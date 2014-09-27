@@ -50,7 +50,7 @@
                 'data': content
             };
             var callStatus = {
-                'isOK': true,
+                'isOK': content != null ? true : false,
                 'code': 0,
                 'msg': ''
             };
@@ -88,15 +88,17 @@
             var hasCallback = typeof (callback) === "function";
 
         	// logic to see if key is in "virtual" folder and then return it if is..
+	        var found = false;
             for (var key in window.localStorage) {
             	if (key.indexOf(name) == 0) {
             		window.localStorage.removeItem(key);
-            	}
+		            found = true;
+	            }
             }
 
 
             var callStatus = {
-                'isOK': true,
+                'isOK': found,
                 'code': 0,
                 'msg': ''
             };

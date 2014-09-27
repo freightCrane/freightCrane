@@ -1,8 +1,17 @@
 var providersToTest = [
 	{ 'name': 'localstorage', 'config': {}, 'requireSecure': false },
-	{ 'name': 'dropbox', 'config': {}, 'requireSecure': true },
+	{ 'name': 'dropbox', 'config': { 'appKey': 'elazxasyxdt1pkc' }, 'requireSecure': true },
 	{ 'name': 'github', 'config': {}, 'requireSecure': true }
 ];
+
+function isValidStorage(storage, assert, text) {
+	assert.ok('init' in storage, text + " has init function");
+	assert.ok('get' in storage, text + " has get function");
+	assert.ok('set' in storage, text + " has set function");
+	assert.ok('del' in storage, text + " has del function");
+	assert.ok('list' in storage, text + " has list function");
+	assert.ok('exists' in storage, text + " has exists function");
+}
 
 QUnit.module("Core");
 QUnit.test("sanity checks", function () {
@@ -53,17 +62,40 @@ QUnit.test("Only has expected providers", function (assert) {
 function testStorage(name, config, requireSecure) {
 	QUnit.module(name);
 	QUnit.test("sanity check", function (assert) {
-		assert.ok('init' in jStorage.providers[name], "has init function");
-		assert.ok('get' in jStorage.providers[name], "has get function");
-		assert.ok('set' in jStorage.providers[name], "has set function");
-		assert.ok('del' in jStorage.providers[name], "has del function");
-		assert.ok('list' in jStorage.providers[name], "has list function");
-		assert.ok('exists' in jStorage.providers[name], "has exists function");
+		isValidStorage(jStorage.providers[name], assert);
 		if (requireSecure && window.location.protocol !== "https:") {
 			assert.ok(false, "require https connection (Change address to page)");
 		}
 	});
 
+	QUnit.asyncTest("can create storage", function (assert) {
+		config.name = name;
+		config.callback = function (storage) {
+			assert.ok(true, "callback was called");
+			isValidStorage(storage, assert, "callback object");
+
+			storage.get('jstorage-unit-test1', function (obj, status) {
+				assert.ok(!status.isOK, "Get content, should get no hit.");
+				storage.set('jstorage-unit-test1', 'Test content', function (obj2, status2) {
+					assert.ok(status2.isOK, "Set content, successfully created content.");
+					storage.get('jstorage-unit-test1', function (obj3, status3) {
+						assert.ok(status3.isOK, "Get content, callback was successfully called.");
+						assert.ok(obj3.data == 'Test content', "Get content, successfully got correct content.");
+
+						storage.del('jstorage-unit-test1', function (status4) {
+							assert.ok(status4.isOK, "successfully removed content.");
+							QUnit.start();
+						});
+					});
+				});
+			});
+		}
+		var obj = jStorage(config);
+		assert.ok(true, "configuration is right");
+		isValidStorage(obj, assert, "jStorage function return object");
+
+		//assert.ok(storage.constructor.name == 'jStorage.fn.jStorage.init', "object created is of correct type");
+	});
 }
 
 for (var providerIndex = 0; providerIndex < providersToTest.length; providerIndex++) {
