@@ -14,9 +14,18 @@ function isValidStorage(storage, assert, text) {
 }
 
 function isValidStatus(status, assert, text) {
-	assert.ok('isOK' in status, text + " has isOK function");
-	assert.ok('code' in status, text + " has code function");
-	assert.ok('msg' in status, text + " has msg function");
+	assert.ok('isOK' in status, text + " has isOK property");
+	assert.ok('code' in status, text + " has code property");
+	assert.ok('msg' in status, text + " has msg property");
+}
+
+function isValidListItem(item, assert)
+{
+	assert.ok('mime-type' in item, "list item has mime-type property.");
+	assert.ok('modified' in item, "list item has modified property.");
+	assert.ok('name' in item, "list item has name property.");
+	assert.ok('path' in item, "list item has path property.");
+	assert.ok('size' in item, "list item has size property.");
 }
 
 QUnit.module("Core");
@@ -103,11 +112,9 @@ function testStorage(name, config, requireSecure) {
 		var obj = jStorage(config);
 		assert.ok(true, "configuration is right");
 		isValidStorage(obj, assert, "jStorage function return object");
-
-		//assert.ok(storage.constructor.name == 'jStorage.fn.jStorage.init', "object created is of correct type");
 	});
 
-	QUnit.asyncTest("can list storage", function (assert) {
+	QUnit.asyncTest("can list items", function (assert) {
 		config.name = name;
 		config.callback = function (storage) {
 			storage.list('/jstorage-unit-test2/', function (list, status) {
@@ -119,7 +126,20 @@ function testStorage(name, config, requireSecure) {
 						storage.list('/jstorage-unit-test2/', function (list2, status3) {
 							assert.ok(status3.isOK, "list folder content, status is correct.");
 							assert.ok(list2.length == 2, "number of files in folder is correct");
-							storage.del('/jstorage-unit-test2', function (status4) {
+							if (list2.length == 2) {
+								isValidListItem(list2[0], assert);
+								//isValidListItem(list2[1], assert);
+								//console.log(list2[0]);
+								assert.ok(list2[0].name == "content1", "name in list item is correct.");
+								assert.ok(list2[0].path == "/jstorage-unit-test2/content1", "path in list item is correct.");
+								assert.ok(list2[0].size == 12, "size in list item is 12.");
+
+								isValidListItem(list2[1], assert);
+								assert.ok(list2[1].name == "content2", "name in list item is correct.");
+								assert.ok(list2[1].path == "/jstorage-unit-test2/content2", "path in list item is correct.");
+								assert.ok(list2[1].size == 25, "size in list item is 25.");
+							}
+							storage.del('/jstorage-unit-test2/', function (status4) {
 								isValidStatus(status4, assert, "del list status");
 								assert.ok(status4.isOK, "successfully removed folder.");
 								QUnit.start();
