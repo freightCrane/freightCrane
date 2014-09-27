@@ -135,11 +135,12 @@
 
 					// Make sure subfolders are only added once
 					if (!(tmp in keys)) {
-			            // TODO: set size value
+						var size = localStorage.getItem(fullname).length;
+
 			            lists.push({
 			            	'path': fullname,
 							'name': tmp,
-				            'size': 0,
+				            'size': size,
 				            'mime-type': 'plain/text',
 				            'modified': new Date()
 			            });
