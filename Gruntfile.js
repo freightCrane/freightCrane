@@ -3,7 +3,10 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		qunit: {
-			src: ['tests/index.htm']
+			src: [
+				'tests/index.htm?module=Core',
+				'tests/index.htm?module=localstorage'
+				]
 		}
 	});
 
