@@ -59,6 +59,11 @@
                 this._provider.set(name, content, callback);
             }
         },
+        move: function (currentName, newName, callback) {
+        	if (this._provider) {
+        		this._provider.move(currentName, newName, callback);
+        	}
+        },
         del: function (name, callback) {
             if (this._provider) {
                 this._provider.del(name, callback);

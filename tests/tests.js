@@ -151,6 +151,40 @@ function testStorage(name, config, requireSecure) {
 		}
 		var obj = jStorage(config);
 	});
+
+	QUnit.asyncTest("can move items", function (assert) {
+		config.name = name;
+		config.callback = function (storage) {
+			//storage.list('/jstorage-unit-test3/', function (list, status) {
+			//	isValidStatus(status, assert, "list status");
+			//	assert.ok(!status.isOK, "list folder content, should get no hit.");
+
+				storage.set('/jstorage-unit-test3/content1', 'Test content', function (obj2, status) {
+					storage.move('/jstorage-unit-test3/content1', '/jstorage-unit-test3/content2', function (status2) {
+						assert.ok(status2.isOK, "list folder content, status is correct.");
+						storage.list('/jstorage-unit-test3/', function (list, status3) {
+							assert.ok(status3.isOK, "list folder content, status is correct.");
+							assert.ok(list.length == 1, "number of files in folder is correct");
+							if (list.length == 1) {
+								isValidListItem(list[0], assert);
+								//isValidListItem(list2[1], assert);
+								//console.log(list2[0]);
+								assert.ok(list[0].name == "content2", "name in list item is correct.");
+								assert.ok(list[0].path == "/jstorage-unit-test3/content2", "path in list item is correct.");
+								assert.ok(list[0].size == 12, "size in list item is 12.");
+							}
+							//storage.del('/jstorage-unit-test3/', function (status4) {
+							//	isValidStatus(status4, assert, "del list status");
+							//	assert.ok(status4.isOK, "successfully removed folder.");
+								QUnit.start();
+							//});
+						});
+					});
+				});
+			//});
+		}
+		var obj = jStorage(config);
+	});
 }
 
 for (var providerIndex = 0; providerIndex < providersToTest.length; providerIndex++) {

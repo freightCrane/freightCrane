@@ -167,6 +167,35 @@
                 }
             });
         },
+        move: function (currentName, newName, callback) {
+        	var self = this;
+        	var hasCallback = typeof (callback) === "function";
+
+        	this.client.move(currentName, newName, function (error, info) {
+        		if (error) {
+        			// TODO: use a general error handling
+        			var callStatus = {
+        				'isOK': false,
+        				'code': -1,
+        				'msg': error.response.error
+        			};
+
+        			if (hasCallback) {
+        				callback(callStatus);
+        			}
+        		} else {
+        			var callStatus = {
+        				'isOK': true,
+        				'code': 0,
+        				'msg': ''
+        			};
+
+        			if (hasCallback) {
+        				callback(callStatus);
+        			}
+        		}
+        	});
+        },
         del: function (name, callback) {
             var self = this;
             var hasCallback = typeof (callback) === "function";

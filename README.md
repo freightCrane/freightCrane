@@ -144,6 +144,18 @@ storage.set('testing.txt', 'Hello World!', function(callStatus) {
 });
 ```
 
+###move(file_path_current, file_path_new, callback(callStatus))###
+
+Move file from one location to a new.
+
+```js
+storage.move('testing.txt', 'testing2.txt', function(callStatus) {
+	if (callStatus.isOK) {
+
+	}
+});
+```
+
 ###del(file_path, callback(callStatus))###
 
 Remove file.

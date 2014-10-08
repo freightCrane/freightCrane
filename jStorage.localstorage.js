@@ -83,6 +83,33 @@
 				callback(obj, callStatus);
 			}
 		},
+		move: function (currentName, newName, callback) {
+			var self = this;
+			var hasCallback = typeof (callback) === "function";
+
+			var callStatus = false;
+			var data = window.localStorage.getItem(currentName);
+			if (data) {
+				window.localStorage.setItem(newName, data);
+				window.localStorage.removeItem(currentName);
+				callStatus = {
+					'isOK': true,
+					'code': 0,
+					'msg': ''
+				};
+			} else {
+				callStatus = {
+					'isOK': false,
+					'code': -1,
+					'msg': 'no file to move'
+				};
+			}
+
+			// TODO: Only return successfull call if browser supports localStorage.
+			if (hasCallback) {
+				callback(callStatus);
+			}
+		},
 		del: function (name, callback) {
 			var self = this;
 			var hasCallback = typeof (callback) === "function";
