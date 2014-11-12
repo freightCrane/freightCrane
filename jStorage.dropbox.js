@@ -13,9 +13,13 @@
     }.call(this);
     /* Content from: https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js : End */
 
-    jStorage.providers.dropbox = jStorage.providers.prototype = {
-        init: function (wrapper, config) {
-            var self = this;
+    jStorage.providers.dropbox = {
+    	init: function (wrapper, config) {
+        	// As we know that jStorage dropbox storage module requires an appKey, make sure we have it before going any future.
+        	if (!('appKey' in config)) {
+        		throw 'Argument "config" need a property called "appKey". Get yours from: https://dropbox.com/developers/apps';
+        	}
+        	var self = this;
             this._config = config;
             this._hasCallback = config && typeof (config.callback) === "function";
 
@@ -25,8 +29,10 @@
             this.client.authenticate({ interactive: false }, function (error) {
                 // TODO: Should we force authentication here so developers know everything is ready in the next step?
 
-                // We need to try to read from storage to know if it was successfull or not...
-                // Don't know why this is needed, the error variable is always null for some reason.
+                // Dropbox API provides the param 'error' above to check if we are authenticated - unfortunately,
+                // it always returns true. So to test if we are authenticated we do a request for a nonexisting
+                // file. If we get a 404 back, we are authenticated. Otherwise we get a 403 back and need to
+                // initiate a new authentication.
                 self.client.readFile("", function (error2, data) {
                     var callStatus = false;
                     if (!error2 || error2.status == 404) {
@@ -161,6 +167,35 @@
                 }
             });
         },
+        move: function (currentName, newName, callback) {
+        	var self = this;
+        	var hasCallback = typeof (callback) === "function";
+
+        	this.client.move(currentName, newName, function (error, info) {
+        		if (error) {
+        			// TODO: use a general error handling
+        			var callStatus = {
+        				'isOK': false,
+        				'code': -1,
+        				'msg': error.response.error
+        			};
+
+        			if (hasCallback) {
+        				callback(callStatus);
+        			}
+        		} else {
+        			var callStatus = {
+        				'isOK': true,
+        				'code': 0,
+        				'msg': ''
+        			};
+
+        			if (hasCallback) {
+        				callback(callStatus);
+        			}
+        		}
+        	});
+        },
         del: function (name, callback) {
             var self = this;
             var hasCallback = typeof (callback) === "function";
@@ -209,9 +244,10 @@
 					// Only loop trough fileinfos if we have them (We don't have them for 404 for example)
 	                if (fileInfos) {
 		                for (var i = 0; i < fileInfos.length; i++) {
-			                var info = fileInfos[i];
+		                	var info = fileInfos[i];
 			                lists.push({
-				                'name': info.path,
+			                	'path': info.path,
+								'name': info.name,
 				                'size': info.size,
 				                'mime-type': info.mimeType,
 				                'modified': info.modifiedAt
@@ -220,7 +256,7 @@
 	                }
 
 	                var callStatus = {
-                        'isOK': true,
+                        'isOK': lists.length ? true : false,
                         'code': 0,
                         'msg': ''
                     };

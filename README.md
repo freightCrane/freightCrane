@@ -1,5 +1,7 @@
 #jStorage - Storage made Easy#
 
+[![Build Status](https://travis-ci.org/flowertwig-org/jStorage.svg?branch=master)](https://travis-ci.org/flowertwig-org/jStorage)
+
 jStorage helps you get started with using cloud storage (Like Dropbox or GitHub).
 With jStorage you just need to learn 1 API and you can easily add support for more providers in your project.
 
@@ -15,7 +17,7 @@ With jStorage you just need to learn 1 API and you can easily add support for mo
 
 ##Demo##
 
-<https://jstorage-flowertwig-org.loopiasecure.com/demo/>
+<https://jstorage.azurewebsites.net/demo/>
 
 
 ##Prepare provider(s)##
@@ -136,6 +138,18 @@ Write file content.
 
 ```js
 storage.set('testing.txt', 'Hello World!', function(callStatus) {
+	if (callStatus.isOK) {
+
+	}
+});
+```
+
+###move(file_path_current, file_path_new, callback(callStatus))###
+
+Move file from one location to a new.
+
+```js
+storage.move('testing.txt', 'testing2.txt', function(callStatus) {
 	if (callStatus.isOK) {
 
 	}

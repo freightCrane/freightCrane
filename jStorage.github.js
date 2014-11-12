@@ -61,7 +61,7 @@
 
 
 
-    jStorage.providers.github = jStorage.providers.prototype = {
+    jStorage.providers.github = {
         init: function (wrapper, config) {
             var self = this;
 

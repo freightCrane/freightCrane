@@ -59,6 +59,11 @@
                 this._provider.set(name, content, callback);
             }
         },
+        move: function (currentName, newName, callback) {
+        	if (this._provider) {
+        		this._provider.move(currentName, newName, callback);
+        	}
+        },
         del: function (name, callback) {
             if (this._provider) {
                 this._provider.del(name, callback);
@@ -72,14 +77,14 @@
         exists: function (name, callback) {
             //console.log('exists');
             if (this._provider) {
-                this._provider.exists();
+                this._provider.exists(name, callback);
             }
         }
     };
 
     // Placeholder for our provider modules.
     // Each module will register itself here.
-    jStorage.providers = jStorage.prototype = {
+    jStorage.providers = {
 
     };
 
