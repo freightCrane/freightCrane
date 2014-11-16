@@ -120,24 +120,12 @@ storage.get('testing.txt', function(file, callStatus) {
 });
 ```
 
-###getMeta(file_path, callback(fileMeta, callStatus))###
-
-Read metadata for file.
-
-```js
-storage.get('testing.txt', function(fileMeta, callStatus) {
-	if (callStatus.isOK) {
-
-	}
-});
-```
-
-###set(file_path, content, callback(callStatus))###
+###set(file_path, content, callback(fileMeta, callStatus))###
 
 Write file content.
 
 ```js
-storage.set('testing.txt', 'Hello World!', function(callStatus) {
+storage.set('testing.txt', 'Hello World!', function(metaData, callStatus) {
 	if (callStatus.isOK) {
 
 	}
@@ -168,7 +156,7 @@ storage.del('testing.txt', function(callStatus) {
 });
 ```
 
-###lists(directory_path, callback(fileMeta[], callStatus))###
+###list(directory_path, callback(fileMeta[], callStatus))###
 
 List all files in directory.
 
