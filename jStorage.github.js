@@ -72,6 +72,7 @@
             this._hasCallback = config && typeof (config.callback) === "function";
             this._state = 'random' + new Date().getTime();
             this._code = false;
+            this._shaCache = {};
 
             this.ensureAuth(wrapper, config);
 
@@ -159,6 +160,7 @@
                     var info = arguments[1];
                     if (info.type == "file") {
                         var data = arguments[1].content;
+                        self._shaCache[name] = info.sha;
                         callback(
                             {
                                 'name': info.path,
@@ -185,6 +187,12 @@
                 "message": "jStorage Test update",
                 "content": btoa(content)
             };
+            // This is required to update existing file (we need to tell github from what version we are trying to update)
+            var sha = self._shaCache[name];
+            if (sha) {
+                data["sha"] = sha;
+            }
+
             githubRequest("PUT", addr, self._config.token, data, function () {
                 console.log(arguments);
 
