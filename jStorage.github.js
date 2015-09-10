@@ -40,7 +40,9 @@
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
                 if (this.status >= 200 && this.status < 300 || this.status === 304) {
-                    callback(null, this.responseText ? JSON.parse(this.responseText) : true, this);
+                    var responseData = this.responseText ? JSON.parse(this.responseText) : {};
+                    responseData['last-modified'] = this.getResponseHeader("Last-Modified");
+                    callback(null, responseData, this);
                 } else {
                     callback({ path: address, request: this, error: this.status });
                 }
@@ -166,7 +168,7 @@
                                 'name': info.path,
                                 'size': info.size,
                                 'mime-type': 'text/html',
-                                'modified': 'Wed Jan 01 2014 15:11:07 GMT+0100 (W. Europe Standard Time)',
+                                'modified': info['last-modified'],
                                 'data': atob(data)
                             },
                             { 'isOK': true, 'msg': '', 'code': 0 });
@@ -180,7 +182,6 @@
         },
         set: function (name, content, callback) {
             var self = this;
-            console.log('set', name, content);
             // update content of file
             addr = "https://api.github.com/repos/" + self._config.repo + "/contents/" + name;
             var data = {
@@ -194,8 +195,6 @@
             }
 
             githubRequest("PUT", addr, self._config.token, data, function () {
-                console.log(arguments);
-
                 if (arguments.length >= 2) {
                     var info = arguments[1];
                     if (info.type == "file") {
@@ -205,8 +204,7 @@
                                 'name': info.path,
                                 'size': info.size,
                                 'mime-type': 'text/html',
-                                'modified': 'Wed Jan 01 2014 15:11:07 GMT+0100 (W. Europe Standard Time)',
-                                'data': atob(data)
+                                'modified': info['last-modified'],
                             },
                             { 'isOK': true, 'msg': '', 'code': 0 });
                     } else {
@@ -216,8 +214,6 @@
                     callback(null, { 'isOK': false, 'msg': arguments[0].request.statusText, 'code': arguments[0].request.status });
                 }
             });
-
-            console.log('github set');
         },
         del: function (name, callback) {
             console.log('github del');
