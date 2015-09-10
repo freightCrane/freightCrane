@@ -54,8 +54,8 @@
                     <div data-bind="visible: isReady()">
                         <p>Update text boxes, wait for it to finish updating and then refresh page to see value presistent.</p>
 
-                        <p>file1.txt: <input data-bind="value: file1, valueUpdate: 'keyup'" /> <span data-bind="visible: updatingFile1()">Updating value on server...</span></p>
-                        <p>file2.txt: <input data-bind="value: file2, valueUpdate: 'keyup'" /> <span data-bind="visible: updatingFile2()">Updating value on server...</span></p>
+                        <p>file1.txt: <input data-bind="value: file1" /> <span data-bind="visible: updatingFile1()">Updating value on server...</span></p>
+                        <p>file2.txt: <input data-bind="value: file2" /> <span data-bind="visible: updatingFile2()">Updating value on server...</span></p>
                     </div>
                 </div>
             </div>
@@ -81,10 +81,8 @@
 
             this.storage = jStorage({
                 'name': 'github',
-                'clientId': 'df3a0f28472a4ad20f39',
-                'clientSecret': 'f3029af7a93f39319b580dea5afbce693bb56876',
-                'access': 'private', // http://developer.github.com/v3/oauth/#scopes
-                'repo': 'jStorageTest',
+                'repo': 'flowertwig-org/jStorageTest',
+                'token': '<place your personal token here>', // https://github.com/settings/tokens/new
                 'callback': function (storage, callStatus) {
                     self.isReady(true);
 
@@ -93,6 +91,7 @@
 
                         storage.get('file1.txt', function (file, callStatus) {
                             if (callStatus.isOK) {
+                                console.log(file.data);
                                 self.file1(file.data);
                             }
                         });
@@ -102,6 +101,8 @@
                                 self.file2(file.data);
                             }
                         });
+                    } else {
+                        alert('failed to init storage because: ' + callStatus.msg);
                     }
                 }
             });
