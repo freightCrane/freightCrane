@@ -197,12 +197,11 @@
             githubRequest("PUT", addr, self._config.token, data, function () {
                 if (arguments.length >= 2) {
                     var info = arguments[1];
-                    if (info.type == "file") {
-                        var data = arguments[1].content;
+                    if (info.content && info.content.type == "file") {
                         callback(
                             {
-                                'name': info.path,
-                                'size': info.size,
+                                'name': info.content.path,
+                                'size': info.content.size,
                                 'mime-type': 'text/html',
                                 'modified': info['last-modified'],
                             },
@@ -216,7 +215,25 @@
             });
         },
         del: function (name, callback) {
-            console.log('github del');
+            var self = this;
+            // update content of file
+            addr = "https://api.github.com/repos/" + self._config.repo + "/contents/" + name;
+            // sha is required to remove file, so we need to have called get before we can delete a file right now.
+            var sha = self._shaCache[name];
+            var data = {
+                "message": "jStorage Test delete",
+                "sha": sha
+
+            };
+
+            githubRequest("DELETE", addr, self._config.token, data, function () {
+                if (arguments.length >= 2) {
+                    var data = arguments[1].content;
+                    callback({ 'isOK': true, 'msg': '', 'code': 0 });
+                } else {
+                    callback({ 'isOK': false, 'msg': arguments[0].request.statusText, 'code': arguments[0].request.status });
+                }
+            });
         },
         list: function (name, callback) {
             console.log('github list');
