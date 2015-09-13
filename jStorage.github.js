@@ -44,7 +44,16 @@
                     responseData['last-modified'] = this.getResponseHeader("Last-Modified");
                     callback(null, responseData, this);
                 } else {
-                    callback({ path: address, request: this, error: this.status });
+                    // This is a special for get directory calls...
+                    if (this.status == 0 && address.indexOf('/contents/') > 0) {
+                        callback(null, [], this);
+                    }
+
+                    callback({
+                        path: address,
+                        request: this,
+                        error: this.status,
+                    });
                 }
             }
         };
@@ -80,49 +89,9 @@
 
             // https://github.com/settings/tokens/new
             var token = this._config.token;
-            var addr = "https://api.github.com/";
-            //githubRequest("GET", addr, token, false, function () {
-            //    console.log(arguments);
-            //});
-
-            // Get current users repositories
-            //addr = "https://api.github.com/user/repos";
-            //githubRequest("GET", addr, token, false, function () {
-            //    if (arguments.length >= 2) {
-            //        var response = arguments[1];
-            //        //console.log(response);
-            //        for (var i = 0; i < response.length; i++) {
-            //            if (response[i].name == "brfskagagard") {
-            //                console.log(response[i]);
-            //            }
-            //        }
-            //    }
-            //});
-
-            // Get collaborators for a given respository
-            //addr = "https://api.github.com/repos/flowertwig-org/brfskagagard/collaborators";
-            //githubRequest("GET", addr, token, false, function () {
-            //    console.log(arguments);
-            //});
-
-            // Get summary of readme
-            //addr = "https://api.github.com/repos/flowertwig-org/brfskagagard/readme";
-            //githubRequest("GET", addr, token, false, function () {
-            //    console.log(arguments);
-            //});
-
-            // Get content of file
-            //addr = "https://api.github.com/repos/" + this._config.repo + "/contents/index.html";
-            //githubRequest("GET", addr, token, false, function () {
-            //    console.log(arguments[0]);
-            //    console.log(arguments[1]);
-            //    console.log(atob(arguments[1].content));
-            //});
-
 
             this._hasRepo = config && typeof (config.repo) === "string";
             this._hasToken = config && typeof (config.token) === "string";
-
 
             var callStatus = false;
             if (this._hasRepo && this._hasToken) {
@@ -156,11 +125,29 @@
         },
         get: function (name, callback) {
             var self = this;
+
+            // Remove begining slash
+            if (name && name.indexOf('/') == 0) {
+                name = name.substring(1);
+            }
+
+            // Remove ending slash
+            if (name && name[name.length - 1] == '/') {
+                name = name.substring(0, name.length - 1);
+            }
+
             addr = "https://api.github.com/repos/" + this._config.repo + "/contents/" + name;
             githubRequest("GET", addr, self._config.token, false, function () {
+                console.log('GET', arguments);
                 if (arguments.length >= 2) {
                     var info = arguments[1];
-                    if (info.type == "file") {
+                    if ('length' in info) {
+                        for (var i = 0; i < info.length; i++) {
+                            self._shaCache[info[i].path] = info[i].sha;
+                        }
+                        callback(null, { 'isOK': false, 'msg': 'this is a directory', 'code': -2 });
+                    }
+                    else if (info.type == "file") {
                         var data = arguments[1].content;
                         self._shaCache[name] = info.sha;
                         callback(
@@ -182,10 +169,21 @@
         },
         set: function (name, content, callback) {
             var self = this;
+
+            // Remove begining slash
+            if (name && name.indexOf('/') == 0) {
+                name = name.substring(1);
+            }
+
+            // Remove ending slash
+            if (name && name[name.length - 1] == '/') {
+                name = name.substring(0, name.length - 1);
+            }
+
             // update content of file
             addr = "https://api.github.com/repos/" + self._config.repo + "/contents/" + name;
             var data = {
-                "message": "jStorage Test update",
+                "message": "jStorage add/update",
                 "content": btoa(content)
             };
             // This is required to update existing file (we need to tell github from what version we are trying to update)
@@ -214,16 +212,68 @@
                 }
             });
         },
+        move: function (currentName, newName, callback) {
+            var self = this;
+
+            //// Remove begining slash
+            //if (name && name.indexOf('/') == 0) {
+            //    name = name.substring(1);
+            //}
+
+            //// Remove ending slash
+            //if (name && name[name.length - 1] == '/') {
+            //    name = name.substring(0, name.length - 1);
+            //}
+            console.log('github move');
+        },
         del: function (name, callback) {
             var self = this;
+
+            // Remove begining slash
+            if (name && name.indexOf('/') == 0) {
+                name = name.substring(1);
+            }
+
+            // Remove ending slash
+            if (name && name[name.length - 1] == '/') {
+                name = name.substring(0, name.length - 1);
+            }
+
+            console.log('del', name);
+
             // update content of file
             addr = "https://api.github.com/repos/" + self._config.repo + "/contents/" + name;
             // sha is required to remove file, so we need to have called get before we can delete a file right now.
             var sha = self._shaCache[name];
-            var data = {
-                "message": "jStorage Test delete",
-                "sha": sha
+            // If we don't already have sha, get it.
+            if (!sha) {
+                // find parent directory name
+                var parentName = name;
+                var index = parentName.lastIndexOf('/');
+                if (index != -1) {
+                    // We are looking a subdirectory
+                    parentName = parentName.substring(0, index);
+                } else {
+                    // We are looking in root..
+                    parentName = '';
+                }
 
+                var test = function (info, status) {
+                    if (status.code == -2) {
+                        // sha has been set, call ourself...
+                        self.del(name, callback);
+                    } else {
+                        callback({ 'isOK': false, 'msg': 'no file or folder matching name', 'code': 404 });
+                    }
+                };
+                self.get(parentName, test);
+                return;
+            }
+
+
+            var data = {
+                "message": "jStorage delete",
+                "sha": sha
             };
 
             githubRequest("DELETE", addr, self._config.token, data, function () {
@@ -237,6 +287,52 @@
         },
         list: function (name, callback) {
             console.log('github list');
+
+            // Remove begining slash
+            if (name && name.indexOf('/') == 0) {
+                name = name.substring(1);
+            }
+
+            // Remove ending slash
+            if (name && name[name.length - 1] == '/') {
+                name = name.substring(0, name.length - 1);
+            }
+
+            var self = this;
+            addr = "https://api.github.com/repos/" + this._config.repo + "/contents/" + name;
+            githubRequest("GET", addr, self._config.token, false, function () {
+                console.log('listA', arguments);
+                if (arguments.length >= 2) {
+                    var info = arguments[1];
+                    console.log('list', info);
+                    if (info.type != "file") {
+
+                        var list = [];
+                        for (var i = 0; i < info.length; i++) {
+                            list.push({
+                                'name': info[i].name,
+                                'path': '/' + info[i].path,
+                                'size': info[i].size,
+                                'mime-type': 'text/html',
+                                'modified': info['last-modified']
+                            });
+                            self._shaCache[info[i].path] = info[i].sha;
+                        }
+
+                        console.log('list content:', list);
+
+                        if (list.length != 0) {
+                            callback(list, { 'isOK': true, 'msg': '', 'code': 0 });
+                        } else {
+                            callback(list, { 'isOK': false, 'msg': 'nothing to list', 'code': 404 });
+                        }
+                    } else {
+                        callback([], { 'isOK': false, 'msg': 'This is not a valid file', 'code': -1 });
+                    }
+                } else {
+                    callback([], { 'isOK': false, 'msg': arguments[0].request.statusText, 'code': arguments[0].request.status });
+                }
+            });
         },
         exists: function (name, callback) {
             console.log('github exists');
