@@ -149,6 +149,12 @@
                     }
                     else if (info.type == "file") {
                         var data = arguments[1].content;
+                        
+                        if (data && data.indexOf('\n') !== -1){
+                            // Fixing data format returned by github as atob doesn't know what todo with newlines.
+                            data = data.replace(/\n/g, '');
+                        }
+                        
                         self._shaCache[name] = info.sha;
                         callback(
                             {
