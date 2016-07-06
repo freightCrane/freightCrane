@@ -82,7 +82,9 @@
             this.storage = jStorage({
                 'name': 'github',
                 'repo': 'flowertwig-org/jStorageTest',
-                'token': '<place your personal token here>', // https://github.com/settings/tokens/new
+                'scope': 'repo',
+                'tokenService': 'https://oauthproxy.herokuapp.com/apps/3/auth/',
+                //'token': '<place your personal token here>', // https://github.com/settings/tokens/new
                 'callback': function (storage, callStatus) {
                     self.isReady(true);
 

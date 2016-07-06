@@ -85,42 +85,17 @@
             this._code = false;
             this._shaCache = {};
 
-            this.ensureAuth(wrapper, config);
-
-            // https://github.com/settings/tokens/new
-            var token = this._config.token;
-
-            this._hasRepo = config && typeof (config.repo) === "string";
-            this._hasToken = config && typeof (config.token) === "string";
-
-            var callStatus = false;
-            if (this._hasRepo && this._hasToken) {
-                callStatus = {
-                    'isOK': true,
-                    'code': 0,
-                    'msg': ''
-                };
+            if (this.ensureAuth(wrapper, config)) {
+                // we have valid auth, call callback...
+                if (self._hasCallback) {
+                    try {
+                        self._config.callback(wrapper, callStatus);
+                    } catch (e) {
+                        // TODO: handle error
+                    }
+                }
             } else {
-                var msg = '';
-                if (!this._hasToken) {
-                    msg += 'No user token specified. ';
-                }
-                if (!this._hasRepo) {
-                    msg += 'No repository specified. ';
-                }
-                callStatus = {
-                    'isOK': false,
-                    'code': -1,
-                    'msg': msg
-                };
-            }
-
-            if (self._hasCallback) {
-                try {
-                    self._config.callback(wrapper, callStatus);
-                } catch (e) {
-                    // TODO: handle error
-                }
+                // No valid auth...
             }
         },
         get: function (name, callback) {
@@ -149,12 +124,12 @@
                     }
                     else if (info.type == "file") {
                         var data = arguments[1].content;
-                        
-                        if (data && data.indexOf('\n') !== -1){
+
+                        if (data && data.indexOf('\n') !== -1) {
                             // Fixing data format returned by github as atob doesn't know what todo with newlines.
                             data = data.replace(/\n/g, '');
                         }
-                        
+
                         self._shaCache[name] = info.sha;
                         callback(
                             {
@@ -343,83 +318,65 @@
         exists: function (name, callback) {
             console.log('github exists');
         },
+        getUrlParameterByName: function (name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        },
         ensureAuth: function (wrapper, config) {
-            // TODO: we require token today, allow for oauth fetching of token here
+            // https://github.com/settings/tokens/new 
 
+            // TODO: remove
+            // clientId = 0f1cbd2e4d64c148c51e
+            // proxyAppId = 536981f0-31a7-495d-bb1b-8ef935fdb331
+            //?token=sdfölkasdfdsfasd
 
-            //var scope = 'public_repo';
-            //if (config.access && config.access == "private") {
-            //    scope = 'repo';
-            //}
+            this._hasRepo = config && typeof (config.repo) === "string";
+            this._hasToken = config && typeof (config.token) === "string";
+            this._hasTokenService = config && typeof (config.tokenService) === "string";
+            if (this._hasTokenService && !this._hasToken) {
+                // TODO: We should probably make sure that the returned scopes is equal to our requested scope
+                var tmpToken = this.getUrlParameterByName('access_token', window.location);
+                if (!!tmpToken) {
+                    config.token = tmpToken;
+                    this._hasToken = true;
+                }
+            }
 
-            //// https://dev.jstorage.flowertwig.org/tests/github.html
-            //var redirectUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
-
-            //var sections = window.location.search.split("&");
-            //for (var i = 0; i < sections.length; i++) {
-            //    var pair = sections[i].split('=');
-            //    if (pair.length == 2) {
-            //        var key = pair[0];
-            //        var value = pair[1];
-
-            //        key = key.replace(/^\?/, '');
-
-            //        console.log('key: ' + key);
-            //        console.log('value: ' + value);
-
-            //        switch (key) {
-            //            case 'state':
-            //                _state = value;
-            //                break;
-            //            case 'code':
-            //                _code = value;
-            //                writeCookie('jStorage-github-code', value, 1);
-            //                break;
-            //        }
-            //    }
-            //}
-
-            //var step = readCookie('jStorage-github-step');
-            //switch (step) {
-            //    default:
-            //        writeCookie('jStorage-github-step', 'step2');
-            //        writeCookie('jStorage-github-state', this._state, 1);
-
-            //        window.location.assign('https://github.com/login/oauth/authorize?client_id=' + config.clientId + '&redirect_uri=' + redirectUrl + '&scope=' + scope + '&state=' + this._state);
-            //        break;
-            //    case 'step2':
-            //        // TODO: Validate so state in cookie matches the state in query param.
-            //        var code = readCookie('jStorage-github-code');
-
-            //        var addr = 'https://github.com/login/oauth/access_token';
-            //        //var addr = "https://githubservice.jstorage.flowertwig.org/api/Values";
-            //        var data = 'client_id=' + config.clientId + '&client_secret=' + config.clientSecret + '&code=' + code + '&redirect_uri=' + redirectUrl;
-
-            //        //var s = document.createElement('script'),
-            //        //    h = document.getElementsByTagName('head')[0];
-            //        //s.src = addr;
-            //        //h.appendChild(s);
-
-            //        //document.getElementsByName('client_id')[0].value = config.clientId;
-            //        //document.getElementsByName('client_secret')[0].value = config.clientSecret;
-            //        //document.getElementsByName('code')[0].value = code;
-            //        //document.getElementsByName('redirect_uri')[0].value = redirectUrl;
-
-            //        githubRequest('POST', addr, false, data, function() {
-            //            console.log(arguments);
-            //        });
-
-            //        //request('https://github.com/login/oauth/access_token?client_id=' + config.clientId + '&client_secret=' + config.clientSecret + '&code=' + code + '&redirect_uri=' + redirectUrl);
-            //        //https://github.com/login/oauth/access_token?client_id=df3a0f28472a4ad20f39&client_secret=f3029af7a93f39319b580dea5afbce693bb56876&code=d58c49123ecdaa0ba73c&redirect_uri=https://dev.jstorage.flowertwig.org/tests/github.html
-            //            //access_token=9c32c17fe2225a36cc04a0f8975b8cd64a4210e0&scope=public_repo&token_type=bearer
-            //        //writeCookie('jStorage-github-step', 'step3');
-            //        break;
-            //    case 'step3':
-            //        //eraseCookie('jStorage-github-step');
-            //        //eraseCookie('jStorage-github-state');
-            //        //eraseCookie('jStorage-github-code');
-            //        break;
-            //}
+            var callStatus = false;
+            if (this._hasToken) {
+                var callStatus = false;
+                if (this._hasRepo) {
+                    callStatus = {
+                        'isOK': true,
+                        'code': 0,
+                        'msg': ''
+                    };
+                } else {
+                    var msg = 'No repository specified. ';
+                    callStatus = {
+                        'isOK': false,
+                        'code': -1,
+                        'msg': msg
+                    };
+                }
+            } else {
+                if (this._hasTokenService) {
+                    // TODO: call service
+                    window.location = config.tokenService;
+                } else {
+                    var msg = 'No user token or tokenService specified. ';
+                    callStatus = {
+                        'isOK': false,
+                        'code': -1,
+                        'msg': msg
+                    };
+                }
+            }
         }
     };
 })(jStorage);
