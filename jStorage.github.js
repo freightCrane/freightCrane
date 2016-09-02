@@ -267,8 +267,6 @@
             });
         },
         list: function (name, callback) {
-            console.log('github list');
-
             // Remove begining slash
             if (name && name.indexOf('/') == 0) {
                 name = name.substring(1);
@@ -282,10 +280,8 @@
             var self = this;
             addr = "https://api.github.com/repos/" + this._config.repo + "/contents/" + name;
             githubRequest("GET", addr, self._config.token, false, function () {
-                console.log('listA', arguments);
                 if (arguments.length >= 2) {
                     var info = arguments[1];
-                    console.log('list', info);
                     if (info.type != "file") {
 
                         var list = [];
@@ -299,8 +295,6 @@
                             });
                             self._shaCache[info[i].path] = info[i].sha;
                         }
-
-                        console.log('list content:', list);
 
                         if (list.length != 0) {
                             callback(list, { 'isOK': true, 'msg': '', 'code': 0 });

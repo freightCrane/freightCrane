@@ -9,7 +9,7 @@ With jStorage you just need to learn 1 API and you can easily add support for mo
 :-------------------------------|:--------------|:---------------
  [Dropbox](#preparing-dropbox)	| Implemented	| https://www.dropbox.com/
  localStorage					| Implemented	| https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Storage
- [GitHub](#preparing-github)	| In progress	| https://github.com/
+ [GitHub](#preparing-github)	| Implemented	| https://github.com/
  MS Azure						| Planned 		| https://account.windowsazure.com/Home/Index
  SkyDrive 						| Planned 		| https://skydrive.live.com/
  Google Drive 					| Planned 		| https://drive.google.com/
@@ -39,10 +39,23 @@ Below we are listing the steps needed for every provider.
 
 ###Preparing GitHub###
 
+There is two ways of using GitHub.
+The recommended way is to use a token service, this way your users will easily be redirected to GitHub to login, approve your application (And your required scope) and that is it.
+The other method requires your users to login to GitHub, navigate to a page and manually create a token, copy the token and use in your application.
+
+Following steps are general for both methods.
+
 1. Go to: https://github.com/settings/applications
 2. Click the "Register new application" button.
 3. Enter info about your application, most importantly the "Authorization callback URL" value.
 4. Click the "Register application" button.
+
+####Use Token Service####
+
+####Use Token####
+
+1. Have a place where your users can enter their token (they can create it here: https://github.com/settings/tokens/new and the "repo" scope is required )
+2. 
 
 
 
@@ -79,12 +92,13 @@ var storage = jStorage({
 });
 ```
 
-_GitHub_
+_GitHub (Token Service)_
 
 ```js
 var storage = jStorage({
 	'name': 'github',
-	'clientId': 'df3a0f28472a4ad20f39',
+	'repo': 'REPOSITORY NAME YOU WANT YOUR USERS TO ACCESS',
+	'scope': 'repo',
 	'tokenService': 'https://githubtokenservice-jstorage-flowertwig-org.loopiasecure.com/', // You SHOULD use your own service for additional security
 	'callback': function(storage, callStatus) {
 		if (callStatus.isOK) {
@@ -93,6 +107,22 @@ var storage = jStorage({
 	}
 });
 ```
+
+_GitHub (Token)_
+
+```js
+var storage = jStorage({
+	'name': 'github',
+	'repo': 'REPOSITORY NAME YOU WANT YOUR USERS TO ACCESS',
+	'token': 'TOKEN user has entered'
+	'callback': function(storage, callStatus) {
+		if (callStatus.isOK) {
+			// github storage are now ready to be used.
+		}
+	}
+});
+```
+
 
 _localStorage_
 
