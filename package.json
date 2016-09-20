@@ -1,11 +1,17 @@
 {
   "name": "jStorage",
   "version": "0.0.1",
-  "devDependencies": {
-    "grunt": "~0.4.4",
-    "grunt-contrib-qunit": "~0.4.0"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/flowertwig-org/jStorage.git"
   },
   "scripts": {
     "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-qunit": "^1.2.0"
   }
 }

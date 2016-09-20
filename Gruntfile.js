@@ -3,16 +3,29 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		qunit: {
-			src: [
-				'tests/index.htm?module=Core',
-				'tests/index.htm?module=localstorage'
-				]
-		}
+			all: {
+        options: {
+          urls: [
+            'http://localhost:9001/tests/index.htm?module=Core',
+            'http://localhost:9001/tests/index.htm?module=localstorage'
+          ]
+        }
+      }
+		},
+    connect: {
+      server: {
+        options: {
+          port: 9001,
+          base: '.'
+        }
+      }
+    },
 	});
-
+  grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-qunit');
-	grunt.registerTask('test', 'qunit:src');
 
-	// Default task(s).
+  grunt.registerTask('test', ['connect', 'qunit']);
+
+  // Default task(s).
 	grunt.registerTask('default', ['test']);
 };
