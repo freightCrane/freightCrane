@@ -49,9 +49,9 @@
                 error('Storage provider "' + config.name + '" was not loaded.');
             }
         },
-        get: function (name, callback) {
+        get: function (name, callback, extendedOptions) {
             if (this._provider) {
-                this._provider.get(name, callback);
+                this._provider.get(name, callback, extendedOptions);
             }
         },
         set: function(name, content, callback) {
@@ -78,6 +78,11 @@
             //console.log('exists');
             if (this._provider) {
                 this._provider.exists(name, callback);
+            }
+        },
+        listStorages: function(callback) {
+            if (this._provider){
+                this._provider.listStorages(callback);
             }
         }
     };
