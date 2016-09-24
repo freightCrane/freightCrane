@@ -1,7 +1,8 @@
 var providersToTest = [
-	{ 'name': 'localstorage', 'config': {}, 'requireSecure': false },
-	{ 'name': 'dropbox', 'config': { 'appKey': 'elazxasyxdt1pkc' }, 'requireSecure': true },
-    { 'name': 'github', 'config': {'repo': 'flowertwig-org/jStorageTest','token': '<place your personal token here>'}, 'requireSecure': true }
+    { 'name': 'localstorage', 'config': {}, 'requireSecure': false },
+    { 'name': 'dropbox', 'config': { 'appKey': 'elazxasyxdt1pkc' }, 'requireSecure': true },
+    { 'name': 'github', 'config': { 'repo': 'flowertwig-org/jStorageTest', 'token': '<place your personal token here>' }, 'requireSecure': true }
+    // { 'name': 'github', 'config': {'repo': 'flowertwig-org/jStorageTest','tokenService': '<place your personal token here>'}, 'requireSecure': true }
 ];
 
 function isValidStorage(storage, assert, text) {
@@ -183,6 +184,26 @@ function testStorage(name, config, requireSecure) {
                 });
             });
             //});
+        }
+        var obj = jStorage(config);
+    });
+
+    QUnit.asyncTest("file exists", function (assert) {
+        config.name = name;
+        config.callback = function (storage) {
+            var fileName = 'file-exists-' + new Date().getTime() + '.txt';
+            storage.exists(fileName, function (file_exists, status) {
+                assert.ok(status.isOK, "status is correct.");
+                assert.ok(!file_exists, "file should not exist, status is correct.");
+                storage.set(fileName, 'exists test', function (setStatus) {
+                    storage.exists(fileName, function (file_exists2, status2) {
+                        assert.ok(status2.isOK, "status is correct.");
+                        assert.ok(file_exists2, "file should exist, status is correct.");
+                        storage.del(fileName, function () { /* Remove test file */ });
+                        QUnit.start();
+                    });
+                });
+            });
         }
         var obj = jStorage(config);
     });
