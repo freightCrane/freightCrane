@@ -79,6 +79,13 @@
 
             });
         },
+        listStorages: function (callback) {
+            var self = this;
+            callback([{
+                'name': '',
+                'path': ''
+            }]);
+        },
         get: function (name, callback) {
             var self = this;
             var hasCallback = typeof (callback) === "function";
@@ -307,58 +314,5 @@
                 }
             });
         }
-        //,
-        //userInfo: function () {
-        //    var self = this;
-
-        //    this.client.getAccountInfo(function (error, info, info2) {
-        //        if (error) {
-        //            var callStatus = {
-        //                'isOK': false,
-        //                'code': -1,
-        //                'msg': error.response.error
-        //            };
-        //            callback(callStatus);
-        //        } else {
-        //            var callStatus = {
-        //                'isOK': true,
-        //                'code': 0,
-        //                'msg': ''
-        //            };
-
-        //            // info contains developer info?
-        //            //{
-        //            //    "name":"My Flowertwig",
-        //            //    "email":"email@example.com",
-        //            //    "countryCode":"SE",
-        //            //    "uid":"565098345953045",
-        //            //    "publicAppUrl":null,
-        //            //    "referralUrl":"https://db.tt/tNxE1Fpp",
-        //            //    "quota":79188459520,
-        //            //    "privateBytes":1596075295,
-        //            //    "sharedBytes":0,
-        //            //    "usedQuota":1596075295
-        //            //}
-
-        //            // info contains user info?
-        //            //{
-        //            //    "referral_link":"https://db.tt/tNxE1Fpp",
-        //            //    "display_name":"My Flowertwig",
-        //            //    "uid":565098345953045,
-        //            //    "country":"SE",
-        //            //    "quota_info":
-        //            //    {
-        //            //        "datastores":0,
-        //            //        "shared":0,
-        //            //        "quota":79188459520,
-        //            //        "normal":1596075295
-        //            //    },
-        //            //    "email":"email@example.com"
-        //            //}
-
-        //            callback(callStatus);
-        //        }
-        //    });
-        //}
     };
 })(jStorage);
