@@ -69,13 +69,17 @@
                 this._provider.del(name, callback);
             }
         },
+        listStorages: function (callback) {
+            if (this._provider) {
+                this._provider.listStorages(callback);
+            }            
+        },
         list: function (name, callback) {
             if (this._provider) {
                 this._provider.list(name, callback);
             }
         },
         exists: function (name, callback) {
-            //console.log('exists');
             if (this._provider) {
                 this._provider.exists(name, callback);
             }

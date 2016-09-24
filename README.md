@@ -1,4 +1,4 @@
-#jStorage - Storage made Easy#
+# jStorage - Storage made Easy
 
 [![Build Status](https://travis-ci.org/flowertwig-org/jStorage.svg?branch=master)](https://travis-ci.org/flowertwig-org/jStorage)
 
@@ -15,18 +15,18 @@ With jStorage you just need to learn 1 API and you can easily add support for mo
  Google Drive 					| Planned 		| https://drive.google.com/
  Box							| Planned 		| https://www.box.com/
 
-##Demo##
+## Demo
 
 <https://jstorage.azurewebsites.net/demo/>
 
 
-##Prepare provider(s)##
+## Prepare provider(s)
 
 Depending on the storage provider you want to use you need to do some steps at the provider to prepare it for usage.
 Below we are listing the steps needed for every provider.
 
 
-###Preparing Dropbox###
+### Preparing Dropbox
 
 1. Go to: https://www.dropbox.com/developers/apps
 2. Click the "Create app"
@@ -37,7 +37,7 @@ Below we are listing the steps needed for every provider.
 7. Write a address into "OAuth redirect URIs", this is the address the user will be sent to after giving your app permissions. Please note that it MUST to start with "https://" to work if you are using a DNS. Also note that it must not be a fragment URI, it must be a plain URI.
 
 
-###Preparing GitHub###
+### Preparing GitHub
 
 There is two ways of using GitHub.
 The recommended way is to use a token service, this way your users will easily be redirected to GitHub to login, approve your application (And your required scope) and that is it.
@@ -50,16 +50,16 @@ Following steps are general for both methods.
 3. Enter info about your application, most importantly the "Authorization callback URL" value.
 4. Click the "Register application" button.
 
-####Use Token Service####
+#### Use Token Service
 
-####Use Token####
+#### Use Token
 
 1. Have a place where your users can enter their token (they can create it here: https://github.com/settings/tokens/new and the "repo" scope is required )
-2. 
+2.
 
 
 
-##Setup##
+##Setup
 
 include
 ```html
@@ -76,7 +76,7 @@ You can use all of them at the same time.
 
 ##API##
 
-###jStorage(initConfig)###
+### jStorage(initConfig)
 
 _Dropbox_
 
@@ -138,7 +138,7 @@ var storage = jStorage({
 ```
 
 
-###get(file_path, callback(file, callStatus))###
+### get(file_path, callback(file, callStatus))
 
 Read content of file.
 
@@ -150,7 +150,7 @@ storage.get('testing.txt', function(file, callStatus) {
 });
 ```
 
-###set(file_path, content, callback(fileMeta, callStatus))###
+### set(file_path, content, callback(fileMeta, callStatus))
 
 Write file content.
 
@@ -162,7 +162,7 @@ storage.set('testing.txt', 'Hello World!', function(metaData, callStatus) {
 });
 ```
 
-###move(file_path_current, file_path_new, callback(callStatus))###
+### move(file_path_current, file_path_new, callback(callStatus))
 
 Move file from one location to a new.
 
@@ -174,19 +174,19 @@ storage.move('testing.txt', 'testing2.txt', function(callStatus) {
 });
 ```
 
-###del(file_path, callback(callStatus))###
+### del(file_or_folder_path, callback(callStatus, file_or_folder_path))
 
-Remove file.
+Remove file or folder.
 
 ```js
-storage.del('testing.txt', function(callStatus) {
+storage.del('testing.txt', function(callStatus, file_or_folder_path) {
 	if (callStatus.isOK) {
 
 	}
 });
 ```
 
-###list(directory_path, callback(fileMeta[], callStatus))###
+### list(directory_path, callback(fileMeta[], callStatus))
 
 List all files in directory.
 
@@ -200,7 +200,7 @@ storage.lists('/', function(files, callStatus) {
 });
 ```
 
-###exists(file_path, callback(bool, callStatus))###
+### exists(file_path, callback(bool, callStatus))
 
 Does file exists?
 
@@ -217,7 +217,7 @@ storage.exists('testing.txt', function(file_exists, callStatus) {
 ```
 
 
-###initConfig###
+### initConfig
 
 
 
@@ -231,7 +231,7 @@ storage.exists('testing.txt', function(file_exists, callStatus) {
 }
 ```
 
-###callStatus###
+### callStatus
 
 Indicate if the call was successfull or not.
 Object has the following properties:
@@ -248,7 +248,7 @@ Object has the following properties:
 }
 ```
 
-###file###
+### file
 
 Object used in get method, object has the following properties:
 - name - filename including extension and directory.
@@ -267,7 +267,7 @@ Object used in get method, object has the following properties:
 }
 ```
 
-###fileMeta###
+### fileMeta
 
 Object returned for getMeta and list methods, object has the following properties:
 - name - filename including extension and directory.
@@ -283,3 +283,12 @@ Object returned for getMeta and list methods, object has the following propertie
 	'modified': Wed Jan 01 2014 15:11:07 GMT+0100 (W. Europe Standard Time)
 }
 ```
+
+
+# License
+MIT
+
+# Contributing
+- Pull requests are welcome.
+- Setup and test locally before submitting issues.
+  `npm install && npm test`

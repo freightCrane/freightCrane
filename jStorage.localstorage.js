@@ -37,6 +37,13 @@
 				}
 			}
 		},
+        listStorages: function (callback) {
+            var self = this;
+            callback([{
+                'name': '',
+                'path': ''
+            }]);
+        },
 		get: function (name, callback) {
 			var self = this;
 			var hasCallback = typeof (callback) === "function";
