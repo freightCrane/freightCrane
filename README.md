@@ -174,12 +174,12 @@ storage.move('testing.txt', 'testing2.txt', function(callStatus) {
 });
 ```
 
-### del(file_path, callback(callStatus))
+### del(file_or_folder_path, callback(callStatus, file_or_folder_path))
 
-Remove file.
+Remove file or folder.
 
 ```js
-storage.del('testing.txt', function(callStatus) {
+storage.del('testing.txt', function(callStatus, file_or_folder_path) {
 	if (callStatus.isOK) {
 
 	}
