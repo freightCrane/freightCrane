@@ -215,10 +215,29 @@
             currentName = self._correctName(currentName);
             newName = self._correctName(newName);
 
-            callback({
-                'isOK': false,
-                'code': 404,
-                'msg': 'method not implemented'
+            // Get current content
+            self.get(currentName, function(file, callStatus) {
+                if (callStatus.isOK) {
+                    // we have file content, write file
+                    self.set(newName, file.data, function(fileMeta, setCallStatus) {
+                        if (setCallStatus.isOK) {
+                            // we have file content
+                            self.del(currentName, function(delCallStatus) {
+                                callback(delCallStatus);
+                            });
+                        }else {
+                            callback(setCallStatus);
+                        }
+                    });
+                }else if (callStatus.code === -2) {
+                    callback({
+                        'isOK': false,
+                        'code': -2,
+                        'msg': 'We are currently not supporting moving folders.'
+                    });
+                }else {
+                    callback(callStatus);
+                }
             });
         },
         _deleteFile: function (name, sha, callback) {
