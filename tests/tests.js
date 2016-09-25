@@ -158,10 +158,6 @@ function testStorage(name, config, requireSecure) {
     QUnit.asyncTest("can move items", function (assert) {
         config.name = name;
         config.callback = function (storage) {
-            //storage.list('/jstorage-unit-test3/', function (list, status) {
-            //	isValidStatus(status, assert, "list status");
-            //	assert.ok(!status.isOK, "list folder content, should get no hit.");
-
             storage.set('/jstorage-unit-test3/content1', 'Test content', function (obj2, status) {
                 storage.move('/jstorage-unit-test3/content1', '/jstorage-unit-test3/content2', function (status2) {
                     assert.ok(status2.isOK, "move file, status is correct.");
@@ -182,7 +178,6 @@ function testStorage(name, config, requireSecure) {
                     });
                 });
             });
-            //});
         }
         var obj = jStorage(config);
     });
