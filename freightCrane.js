@@ -1,10 +1,10 @@
 /*!
- * jStorage
- * https://github.com/flowertwig-org/jStorage
+ * freightCrane
+ * https://github.com/freightCrane/freightCrane
  *
  * Copyright 2013 Mattias Blomqvist and other contributors
  * Released under the MIT license
- * https://github.com/flowertwig-org/jStorage/blob/master/LICENSE
+ * https://github.com/freightCrane/freightCrane/blob/master/LICENSE
  *
  * Date: 21:09 2013-12-30
  */
@@ -22,15 +22,15 @@
     // don't have any legacy browsers to test with ;)
     "use strict";
 
-    var jStorage = function (config) {
-        // The jStorage object is actually just the init constructor 'enhanced'
-        return new jStorage.fn.init(config);
+    var freightCrane = function (config) {
+        // The freightCrane object is actually just the init constructor 'enhanced'
+        return new freightCrane.fn.init(config);
     };
     var error = function (msg) {
         // prepend with our libName to be nice, not everyone has nice debugging tools.
-        throw "jStorage: " + msg;
+        throw "freightCrane: " + msg;
     };
-    jStorage.fn = jStorage.prototype = {
+    freightCrane.fn = freightCrane.prototype = {
         init: function (config) {
             this._provider = false;
 
@@ -38,8 +38,8 @@
             if(config === undefined || !config) error("No config, please consult the readme ;)");
             if(config.name === undefined) error("No name in config.");
 
-            if (jStorage.providers[config.name]) {
-                var provider = jStorage.providers[config.name];
+            if (freightCrane.providers[config.name]) {
+                var provider = freightCrane.providers[config.name];
                 this._provider = provider;
 
                 // Calling the callback now becomes the provider
@@ -88,13 +88,13 @@
 
     // Placeholder for our provider modules.
     // Each module will register itself here.
-    jStorage.providers = {
+    freightCrane.providers = {
 
     };
 
-    // Give the init function the jStorage prototype for later instantiation
-    jStorage.fn.init.prototype = jStorage.fn;
+    // Give the init function the freightCrane prototype for later instantiation
+    freightCrane.fn.init.prototype = freightCrane.fn;
 
-    window.jStorage = jStorage;
+    window.freightCrane = freightCrane;
 
 }(window));

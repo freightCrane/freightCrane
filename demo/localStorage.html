@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>jStorage - Storage made Easy</title>
+    <title>freightCrane - Storage made Easy</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <script>
@@ -20,7 +20,7 @@
     <div class="header">
         <div class="nav">
             <ul class="top-nav">
-                <li><a class="page-title" href="index.html">jStorage</a></li>
+                <li><a class="page-title" href="index.html">freightCrane</a></li>
                 <li><a href="dropbox.html">Dropbox</a></li>
                 <li><a href="github.html">GitHub</a></li>
                 <li><a href="localStorage.html" style="color:#fff">localStorage</a></li>
@@ -39,7 +39,7 @@
                     </p>
                 </div>
                 <div class="span12 in-page-read-container" style="border-radius: 3px; background-color: #eee;">
-                    <h1>jStorage - localStorage</h1>
+                    <h1>freightCrane - localStorage</h1>
                     <p>
                         If your browser supports localStorage we will now save 2 values in your browser.
                         <br /><br />
@@ -63,8 +63,8 @@
     </div>
 
     <script src="js/knockout-2.3.0.js"></script>
-    <script src="../jStorage.js"></script>
-    <script src="../jStorage.localstorage.js"></script>
+    <script src="../freightCrane.js"></script>
+    <script src="../freightCrane.localstorage.js"></script>
     <script>
 
         // Here's my data model
@@ -79,7 +79,7 @@
             this.isReady = ko.observable(false);
             this.isAvailable = ko.observable(false);
 
-            this.storage = jStorage({
+            this.storage = freightCrane({
                 'name': 'localstorage',
                 'callback': function (storage, callStatus) {
                     self.isReady(true);
