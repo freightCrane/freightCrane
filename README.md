@@ -1,9 +1,9 @@
-# jStorage - Storage made Easy
+# freightCrane - Storage made Easy
 
-[![Build Status](https://travis-ci.org/flowertwig-org/jStorage.svg?branch=master)](https://travis-ci.org/flowertwig-org/jStorage)
+[![Build Status](https://travis-ci.org/freightCrane/freightCrane.svg?branch=master)](https://travis-ci.org/freightCrane/freightCrane)
 
-jStorage helps you get started with using cloud storage (Like Dropbox or GitHub).
-With jStorage you just need to learn 1 API and you can easily add support for more providers in your project.
+freightCrane helps you get started with using cloud storage (Like Dropbox or GitHub).
+With freightCrane you just need to learn 1 API and you can easily add support for more providers in your project.
 
  Storage		                |     Status    |     Read more about storage   |
 :-------------------------------|:--------------|:---------------
@@ -63,25 +63,25 @@ Following steps are general for both methods.
 
 include
 ```html
-<script src="jStorage.js">
+<script src="freightCrane.js">
 ```
 and the approperate module that represent the storage you want to use.
 You can use all of them at the same time.
 
 ```html
-<script src="jStorage.dropbox.js">
-<script src="jStorage.github.js">
-<script src="jStorage.localstorage.js">
+<script src="freightCrane.dropbox.js">
+<script src="freightCrane.github.js">
+<script src="freightCrane.localstorage.js">
 ```
 
 ##API##
 
-### jStorage(initConfig)
+### freightCrane(initConfig)
 
 _Dropbox_
 
 ```js
-var storage = jStorage({
+var storage = freightCrane({
 	'name': 'dropbox',
 	'appKey': 'APP KEY YOU SAVED FROM STEP 6 IN PREPARE DROPBOX SECTION',
 	'callback': function(storage, callStatus) {
@@ -95,7 +95,7 @@ var storage = jStorage({
 _GitHub (Token Service)_
 
 ```js
-var storage = jStorage({
+var storage = freightCrane({
 	'name': 'github',
 	'repo': 'REPOSITORY NAME YOU WANT YOUR USERS TO ACCESS',
 	'scope': 'repo',
@@ -111,7 +111,7 @@ var storage = jStorage({
 _GitHub (Token)_
 
 ```js
-var storage = jStorage({
+var storage = freightCrane({
 	'name': 'github',
 	'repo': 'REPOSITORY NAME YOU WANT YOUR USERS TO ACCESS',
 	'token': 'TOKEN user has entered'
@@ -127,7 +127,7 @@ var storage = jStorage({
 _localStorage_
 
 ```js
-var storage = jStorage({
+var storage = freightCrane({
 	'name': 'localstorage',
 	'callback': function(storage, callStatus) {
 		if (callStatus.isOK) {

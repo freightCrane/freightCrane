@@ -1,4 +1,4 @@
-(function (jStorage, undefined) {
+(function (freightCrane, undefined) {
     function githubRequest(method, address, token, data, callback) {
         var xmlhttp;
         if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -42,7 +42,7 @@
         data ? xmlhttp.send(JSON.stringify(data)) : xmlhttp.send();
     }
 
-    jStorage.providers.github = {
+    freightCrane.providers.github = {
         init: function (wrapper, config) {
             var self = this;
 
@@ -180,7 +180,7 @@
             // update content of file
             addr = "https://api.github.com/repos/" + self._config.repo + "/contents/" + name;
             var data = {
-                "message": "jStorage add/update",
+                "message": "freightCrane add/update",
                 "content": btoa(content)
             };
             // This is required to update existing file (we need to tell github from what version we are trying to update)
@@ -243,7 +243,7 @@
         _deleteFile: function (name, sha, callback) {
             var self = this;
             var data = {
-                "message": "jStorage delete",
+                "message": "freightCrane delete",
                 "sha": sha
             };
 
@@ -271,7 +271,7 @@
 
             name = self._correctName(name);
 
-            var key = 'jstorage-temp-del-' + new Date().getTime();
+            var key = 'freightCrane-temp-del-' + new Date().getTime();
             var test = function (status, deletedPath) {
                 deletedPath = self._correctName(deletedPath);
 
@@ -412,7 +412,7 @@
 
                 // Do we have token and tokenstate?
                 if (tmpToken && tmpState) {
-                    var state = localStorage.getItem('jStorage.github.tokenState');
+                    var state = localStorage.getItem('freightCrane.github.tokenState');
                     if (state === tmpState) {
                         // Token state are valid, set/change token.
                         return tmpToken;
@@ -432,10 +432,10 @@
                 // Make sure we don't have token in url (as if user copies the url and sends it to friend/or someone else they will be logged in as our user)
                 var search = '&' + window.location.search.substr(1); // replace question mark with '&' char
                 search = search.replace("&token=" + token, '');
-                search = search.replace("&state=" + localStorage.getItem('jStorage.github.tokenState'), '');
+                search = search.replace("&state=" + localStorage.getItem('freightCrane.github.tokenState'), '');
 
                 // make sure we remove the temporary tokenState from storage
-                window.localStorage.removeItem('jStorage.github.tokenState');
+                window.localStorage.removeItem('freightCrane.github.tokenState');
                 if (search.length === 0) {
                     // we have removed everything in querystring, reset href without querystring part, we are doing it this way instead of setting 'search' property because setting 'search' property will result in '?' in the end of url.
                     window.location.href = location.href.replace(location.search, '');
@@ -467,7 +467,7 @@
                 // token state is used to ensure no one can corrupt our token with just a querystring with "token" specified.
                 // basically, state need to match what we have set in local storage for us to accept new token
                 var tokenState = 'ts' + new Date().getTime();
-                localStorage.setItem('jStorage.github.tokenState', tokenState);
+                localStorage.setItem('freightCrane.github.tokenState', tokenState);
                 // append a unique token state that we can later verify against.
                 tokenService = tokenService + startChar + 'state=' + tokenState;
                 window.location.assign(tokenService);
@@ -487,4 +487,4 @@
             return repo;
         }
     };
-})(jStorage);
+})(freightCrane);

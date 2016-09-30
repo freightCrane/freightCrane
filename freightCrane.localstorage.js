@@ -1,6 +1,6 @@
-(function (jStorage, undefined) {
+(function (freightCrane, undefined) {
 
-	jStorage.providers.localstorage = {
+	freightCrane.providers.localstorage = {
 		init: function (wrapper, config) {
 			var self = this;
 			this._config = config;
@@ -159,7 +159,7 @@
 				if (key.indexOf(name) == 0) {
 					var tmp = key.replace(name, '');
 					var tmpIndex = tmp.indexOf('/');
-					// Remove leading slash 
+					// Remove leading slash
 					if (tmpIndex == 0) {
 						tmp = tmp.substr(1);
 						tmpIndex = tmp.indexOf('/');
@@ -169,7 +169,7 @@
 						tmp = tmp.substr(0, tmpIndex);
 						tmpIndex = tmp.indexOf('/');
 					}
-					// Remove leading slash 
+					// Remove leading slash
 					if (tmpIndex == 0) {
 						tmp = tmp.substr(1);
 					}
@@ -228,4 +228,4 @@
 			}
 		}
 	};
-})(jStorage);
+})(freightCrane);
