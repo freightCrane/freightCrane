@@ -149,3 +149,7 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
+
+
+# Don't check in dependencies
+node_modules
