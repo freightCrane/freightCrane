@@ -1,14 +1,23 @@
 {
   "name": "freightCrane",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/flowertwig-org/jStorage.git"
+    "url": "git://github.com/freightCrane/freightCrane.git"
   },
+  "bugs": {
+    "url": "https://github.com/freightCrane/freightCrane/issues"
+  },
+  "homepage": "https://github.com/freightCrane/freightCrane#readme",
   "scripts": {
     "test": "grunt test"
   },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-connect": "^1.0.2",
