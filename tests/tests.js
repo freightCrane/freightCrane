@@ -1,8 +1,17 @@
+var defaults = {
+  'requireSecure': true,
+  'dropbox_appKey': '',
+  'github_repo': '',
+  'github_token': '',
+  'github_tokenService': ''
+};
+var credentials = testCredentials || defaults;
+
 var providersToTest = [
     { 'name': 'localstorage', 'config': {}, 'requireSecure': false },
-    { 'name': 'dropbox', 'config': { 'appKey': 'elazxasyxdt1pkc' }, 'requireSecure': true },
-    { 'name': 'github', 'config': { 'repo': 'flowertwig-org/jStorageTest', 'token': '<place your personal token here>' }, 'requireSecure': true }
-    // { 'name': 'github', 'config': {'repo': 'flowertwig-org/jStorageTest','tokenService': '<place your personal token here>'}, 'requireSecure': true }
+    { 'name': 'dropbox', 'config': { 'appKey': credentials["dropbox_appKey"] }, 'requireSecure': credentials['requireSecure'] },
+    { 'name': 'github', 'config': { 'repo': credentials["github_repo"], 'token': credentials["github_token"] }, 'requireSecure': testCredentials['requireSecure'] }
+    // { 'name': 'github', 'config': {'repo': testCredentials["github_repo"],'tokenService': testCredentials["github_tokenService"]}, 'requireSecure': testCredentials['requireSecure'] }
 ];
 
 function isValidStorage(storage, assert, text) {
@@ -131,8 +140,6 @@ function testStorage(name, config, requireSecure) {
                                 assert.ok(list2.length == 2, "number of files in folder is correct");
                                 if (list2.length == 2) {
                                     isValidListItem(list2[0], assert);
-                                    //isValidListItem(list2[1], assert);
-                                    //console.log(list2[0]);
                                     assert.ok(list2[0].name == "content1", "name in list item is correct.");
                                     assert.ok(list2[0].path == "/freightCrane-unit-test2/content1", "path in list item is correct.");
                                     assert.ok(list2[0].size == 12, "size in list item is 12.");

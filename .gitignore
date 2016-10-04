@@ -153,3 +153,6 @@ $RECYCLE.BIN/
 
 # Don't check in dependencies
 node_modules
+
+# Don't check in test credentials
+tests/testconfig.js

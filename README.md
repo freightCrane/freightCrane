@@ -291,4 +291,15 @@ MIT
 # Contributing
 - Pull requests are welcome.
 - Setup and test locally before submitting issues.
-  `npm install && npm test`
+  - `npm install && npm test`
+  - Also test manually locally by following the next section.
+
+
+## Testing locally:
+Setting up dropbox and github for testing.
+- Copy `tests/testconfig-example.js` to `tests/testconfig.js`
+- Fill in your own credentials into `tests/testconfig.js` according to
+  ["Prepare Providers"](#prepare-providers).
+- Host the freightCrane repo on a local webserver (f.x: `python -m SimpleHTTPServer` in the repo folder on Unix/Linux/BSD-based systems).
+- Open `/tests/index.htm` in your browser on the path to the local webserver.
+- Sign in into Dropbox and Github when prompted.
