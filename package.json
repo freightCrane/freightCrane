@@ -9,6 +9,10 @@
   "bugs": {
     "url": "https://github.com/freightCrane/freightCrane/issues"
   },
+  "contributors": [
+    "Mathias Blomqvist (https://www.flowertwig.org)",
+    "Stefan Wallin (https://www.stefan-wallin.se)"
+  ],
   "homepage": "https://github.com/freightCrane/freightCrane#readme",
   "scripts": {
     "test": "grunt test"
