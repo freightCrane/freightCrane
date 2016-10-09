@@ -14,7 +14,7 @@
     "test": "grunt test"
   },
   "files": [
-    "src",
+    "*.js",
     "README.md",
     "LICENSE"
   ],
