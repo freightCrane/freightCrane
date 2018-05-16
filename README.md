@@ -59,7 +59,7 @@ Following steps are general for both methods.
 
 
 
-##Setup
+## Setup
 
 include
 ```html
@@ -74,7 +74,7 @@ You can use all of them at the same time.
 <script src="freightCrane.localstorage.js">
 ```
 
-##API##
+## API
 
 ### freightCrane(initConfig)
 
